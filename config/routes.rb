@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :estudiantes
   resources :administradores do
     collection do
       post :cargar_archivo

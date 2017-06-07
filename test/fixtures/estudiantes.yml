@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  carnet: MyString
+  apellidos: MyString
+  nombres: MyString
+  programa: MyString
+  doble_programa: MyString
+  doc_identidad: MyString
+  fecha_nac: MyString
+  sexo: MyString
+  ciudad: MyString
+  celular: MyString
+  sit_academica: MyString
+  cred_tomados: 9.99
+  cred_aprobados: 9.99
+  cred_pga: 9.99
+  prom_acum: 9.99
+  cred_transf: 9.99
+  ssc: 9.99
+  email: MyString
+  cred_sem_actual: 9.99
+
+two:
+  carnet: MyString
+  apellidos: MyString
+  nombres: MyString
+  programa: MyString
+  doble_programa: MyString
+  doc_identidad: MyString
+  fecha_nac: MyString
+  sexo: MyString
+  ciudad: MyString
+  celular: MyString
+  sit_academica: MyString
+  cred_tomados: 9.99
+  cred_aprobados: 9.99
+  cred_pga: 9.99
+  prom_acum: 9.99
+  cred_transf: 9.99
+  ssc: 9.99
+  email: MyString
+  cred_sem_actual: 9.99

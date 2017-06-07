@@ -39,7 +39,9 @@ class AdministradoresController < ApplicationController
   end
 
   def cargar_archivo
-
+    puts "llega"
+    Administrador.import(params[:file])
+    render :status => 200
   end
 
   private
