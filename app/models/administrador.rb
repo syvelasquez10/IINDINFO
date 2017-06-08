@@ -16,8 +16,7 @@ class Administrador < ApplicationRecord
       row.delete "PROM SEM"
       row.delete "SEMESTRE"
       estudiante = Estudiante.where(carnet: row["carnet"])
-      puts estudiante
-      if !estudiante.nil?
+      if estudiante.present?
         estudiante.update(row)
       else
         Estudiante.new(row).save

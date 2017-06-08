@@ -19,4 +19,5 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'profesor', 'profesores'
   inflect.irregular 'administrador', 'administradores'
   inflect.irregular 'rol', 'roles'
+  inflect.irregular 'monitoria', 'monitorias'
 end

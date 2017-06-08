@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  estado: MyString
+  notificaciones: false
+  nota_curso: 9.99
+  estudiante_id: 
+
+two:
+  estado: MyString
+  notificaciones: false
+  nota_curso: 9.99
+  estudiante_id: 
