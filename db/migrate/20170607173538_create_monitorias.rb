@@ -4,7 +4,7 @@ class CreateMonitorias < ActiveRecord::Migration[5.0]
       t.string :estado
       t.boolean :notificaciones
       t.decimal :nota_curso
-      t.int :estudiante_id
+      t.integer :estudiante_id
 
       t.timestamps
     end
