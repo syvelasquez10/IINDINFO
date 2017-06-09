@@ -38,6 +38,14 @@ class Administrador < ApplicationRecord
 
       curso = Curso.where(codigo_curso: row['codigo_curso'])
       if curso.present?
+        #if monitores_requeridos > curso[monitores_solicitados]
+        #  estado = "Faltan Monitores por seleccionar"
+        #elsif monitores_requeridos < curso[monitores_solicitados]
+        #  estado = "Hay mas monitores solicitados de los que se requieren"
+        #else
+        #  estado = "Cantidad adecuada de monitores"
+        #end
+        #row['estado']= estado
         curso.update(row)
       else
         estado= "Faltan Monitores por seleccionar"
@@ -49,7 +57,7 @@ class Administrador < ApplicationRecord
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
-      when ".csv" then Roo::Csv.new(file.path)
+      when ".csv" then Roo::CSV.new(file.path)
       when ".xls" then Roo::Excel.new(file.path)
       when ".xlsx" then Roo::Excelx.new(file.path)
       else raise "Tipo de archivo no manejado: #{file.original_filename}"
