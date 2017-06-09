@@ -38,8 +38,13 @@ class AdministradoresController < ApplicationController
     @administrador.destroy
   end
 
-  def cargar_archivo
-    Administrador.import(params[:file])
+  def cargar_archivo_estudiantes
+    Administrador.import_estudiantes(params[:file])
+    render :json => {:status => "OK"}
+  end
+
+  def cargar_archivo_cursos
+    Administrador.import_cursos(params[:file])
     render :json => {:status => "OK"}
   end
 

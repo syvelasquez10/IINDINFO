@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre_curso: MyString
+  codigo_curso: MyString
+  monitores_solicitados: 1
+  monitores_requeridos: 1
+  estado: MyString
+  inscritos: 1
+
+two:
+  nombre_curso: MyString
+  codigo_curso: MyString
+  monitores_solicitados: 1
+  monitores_requeridos: 1
+  estado: MyString
+  inscritos: 1

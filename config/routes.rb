@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  resources :materia_fantasmas
+  resources :cursos
   resources :monitorias
   resources :estudiantes
   resources :administradores do
     collection do
-      post :cargar_archivo
+      post :cargar_archivo_estudiantes
+      post :cargar_archivo_cursos
     end
     member do
 
