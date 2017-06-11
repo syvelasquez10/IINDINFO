@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   resources :materia_fantasmas
   resources :cursos
   resources :monitorias
-  resources :estudiantes
+  resources :estudiantes do
+    collection do
+      get :email, to: 'estudiantes#find_by_email', email: /^[a-zA-Z.\s]+\d*@uniandes.edu.co$/
+    end
+  end
   resources :administradores do
     collection do
       post :cargar_archivo_estudiantes
