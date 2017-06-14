@@ -1,3 +1,4 @@
 class Monitoria < ApplicationRecord
-  belongs_to :estudiante, foreign_key: true
+  belongs_to :estudiante
+  has_one :curso
 end

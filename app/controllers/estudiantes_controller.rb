@@ -8,7 +8,7 @@ class EstudiantesController < ApplicationController
     render json: @estudiantes
   end
 
-  # GET /estudiantes?email=''
+  # GET /estudiantes/email?email=''
   def find_by_email
     @estudiantes = Estudiante.where(email: params[:email])
 
