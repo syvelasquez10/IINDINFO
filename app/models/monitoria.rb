@@ -1,6 +1,7 @@
 class Monitoria < ApplicationRecord
   belongs_to :estudiante
   has_one :curso
+  has_many :profesor
 
   ESTADOS = ['Solicitado',
              'Aprobado por el profesor',
