@@ -1,6 +1,7 @@
 class Curso < ApplicationRecord
   belongs_to :monitoria
-  has_many :profesores, through: :cartelera_cursos
+  has_many :asignaciones
+  has_many :profesores, through: :asignaciones
 
   validates :codigo_curso, presence: true, uniqueness: true
   validates :inscritos, presence: true, numericality: { only_integer: true }

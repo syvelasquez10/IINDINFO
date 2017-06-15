@@ -10,14 +10,13 @@ class MonitoriasController < ApplicationController
 
   # GET /monitorias/1
   def show
-    render json: @monitoria
+    render json: @monitoria.as_json.merge('estudiante':@monitoria.estudiante.as_json)
   end
 
   # POST /monitorias
   def create
       @monitoria = Monitoria.new(monitoria_params)
       if @monitoria.save
-
         render json: @monitoria, status: :created, location: @monitoria
       else
         render json: @monitoria.errors, status: :unprocessable_entity
@@ -35,12 +34,6 @@ class MonitoriasController < ApplicationController
 
   # DELETE /monitorias/1
   def destroy
-    estudiante = Estudiante.find(@monitoria[:estudiante_id])
-    if estudiante.present? && estudiante.monitoria_id1 == @monitoria.id
-      estudiante.update(monitoria_id1:nil)
-    elsif estudiante.present? && estudiante.monitoria_id2 == @monitoria.id
-      estudiante.update(monitoria_id2:nil)
-    end
     @monitoria.destroy
     render json: { mensaje:"La monitoria ha sido eliminada"}, status: :ok
   end

@@ -38,6 +38,11 @@ class ProfesoresController < ApplicationController
     @profesor.destroy
   end
 
+  # POST /profesores/1/asignar_curso/
+  def asignar_curso
+    Profesor.asignar_curso(params)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_profesor
