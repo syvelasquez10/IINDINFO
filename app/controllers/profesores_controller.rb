@@ -40,7 +40,7 @@ class ProfesoresController < ApplicationController
 
   # POST /profesores/1/asignar_curso/
   def asignar_curso
-    Profesor.asignar_curso(params)
+    render :json => Profesor.asignar_curso(params)
   end
 
   private

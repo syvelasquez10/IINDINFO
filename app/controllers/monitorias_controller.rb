@@ -4,8 +4,11 @@ class MonitoriasController < ApplicationController
   # GET /monitorias
   def index
     @monitorias = Monitoria.all
-
-    render json: @monitorias
+    monitorias = []
+    for monitoria in @monitorias
+      monitorias.push(monitoria.as_json.merge('estudiante':monitoria.estudiante.as_json))
+    end
+    render json: monitorias
   end
 
   # GET /monitorias/1
