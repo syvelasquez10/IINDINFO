@@ -15,12 +15,24 @@ class MonitoriasController < ApplicationController
 
   # POST /monitorias
   def create
-    @monitoria = Monitoria.new(monitoria_params)
-
-    if @monitoria.save
-      render json: @monitoria, status: :created, location: @monitoria
-    else
-      render json: @monitoria.errors, status: :unprocessable_entity
+    curso = Curso.find(monitoria_params[:curso_id])
+    if curso.present?
+      estudiante = Estudiante.find(monitoria_params[:estudiante_id])
+      if !estudiante.monitoria_id1.present? || !estudiante.monitoria_id2.present?
+        @monitoria = Monitoria.new(monitoria_params)
+        if @monitoria.save
+          if !estudiante.monitoria_id1.present?
+            estudiante.update(monitoria_id1:@monitoria.id)
+          elsif !estudiante.monitoria_id2.present?
+            estudiante.update(monitoria_id2:@monitoria.id)
+          end
+          render json: @monitoria, status: :created, location: @monitoria
+        else
+          render json: @monitoria.errors, status: :unprocessable_entity
+        end
+      else
+        render json: { error:"El estudiante ya tiene 2 monitorias asignadas"}, status: :unprocessable_entity
+      end
     end
   end
 
@@ -35,7 +47,14 @@ class MonitoriasController < ApplicationController
 
   # DELETE /monitorias/1
   def destroy
+    estudiante = Estudiante.find(@monitoria[:estudiante_id])
+    if estudiante.present? && estudiante.monitoria_id1 == @monitoria.id
+      estudiante.update(monitoria_id1:nil)
+    elsif estudiante.present? && estudiante.monitoria_id2 == @monitoria.id
+      estudiante.update(monitoria_id2:nil)
+    end
     @monitoria.destroy
+    render json: { mensaje:"La monitoria ha sido eliminada"}, status: :ok
   end
 
   private
