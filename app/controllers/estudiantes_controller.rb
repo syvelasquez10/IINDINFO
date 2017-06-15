@@ -17,7 +17,7 @@ class EstudiantesController < ApplicationController
 
   # GET /estudiantes/1
   def show
-    render json: @estudiante
+    render json: @estudiante.as_json.merge('monitorias':@estudiante.monitorias.as_json)
   end
 
   # POST /estudiantes

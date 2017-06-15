@@ -1,7 +1,6 @@
 class Monitoria < ApplicationRecord
   belongs_to :estudiante
-  has_one :curso
-  has_many :profesor
+  belongs_to :curso
 
   ESTADOS = ['Solicitado',
              'Aprobado por el profesor',
@@ -12,5 +11,4 @@ class Monitoria < ApplicationRecord
 
   validates :estado, inclusion: { in: ESTADOS,
                                 message: "%{value} no es un estado valido" }
-
 end
