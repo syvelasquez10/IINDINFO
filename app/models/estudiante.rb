@@ -6,7 +6,6 @@ class MonitoriasValidator < ActiveModel::Validator
   end
 end
 class Estudiante < ApplicationRecord
-  validates_with MonitoriasValidator
   has_many :monitorias
 
   validates :carnet, presence: true, uniqueness: true

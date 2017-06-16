@@ -11,12 +11,11 @@ class Monitoria < ApplicationRecord
   belongs_to :estudiante
   belongs_to :curso
 
-  ESTADOS = ['Solicitado',
-             'Aprobado por el profesor',
-             'Rechazado por el profesor',
+  ESTADOS = ['Aplico',
              'Aprobado por Coordinacion',
              'Rechazado por Coordinación',
-             'Aprobado por todo el mundo'].freeze
+             'Seleccionado por el Profesor',
+             'Monitoria Aprobada'].freeze
 
   validates :estado, inclusion: { in: ESTADOS,
                                 message: "%{value} no es un estado valido" }
