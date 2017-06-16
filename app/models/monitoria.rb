@@ -6,7 +6,6 @@ class MonitoriasPorEstudianteValidator < ActiveModel::Validator
   end
 end
 class Monitoria < ApplicationRecord
-  validates_with MonitoriasPorEstudianteValidator
 
   belongs_to :estudiante
   belongs_to :curso
@@ -15,7 +14,9 @@ class Monitoria < ApplicationRecord
              'Aprobado por Coordinacion',
              'Rechazado por Coordinación',
              'Seleccionado por el Profesor',
-             'Monitoria Aprobada'].freeze
+             'Monitoria Aprobada',
+             'Entrego Documentos',
+             'Firmo Convenio'].freeze
 
   validates :estado, inclusion: { in: ESTADOS,
                                 message: "%{value} no es un estado valido" }
