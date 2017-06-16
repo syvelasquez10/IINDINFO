@@ -39,6 +39,7 @@ class ProfesoresController < ApplicationController
   end
 
   # POST /profesores/1/asignar_curso/
+  # Los parametros son el id del curso curso_id
   def asignar_curso
     render :json => Profesor.asignar_curso(params)
   end

@@ -6,7 +6,7 @@ class MonitoriasController < ApplicationController
     @monitorias = Monitoria.all
     monitorias = []
     for monitoria in @monitorias
-      monitorias.push(monitoria.as_json.merge('estudiante':monitoria.estudiante.as_json))
+      monitorias.push(monitoria.as_json.merge('estudiante':monitoria.estudiante.as_json).merge('curso':monitoria.curso.as_json))
     end
     render json: monitorias
   end
