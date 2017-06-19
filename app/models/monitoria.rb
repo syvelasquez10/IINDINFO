@@ -6,7 +6,6 @@ class MonitoriasPorEstudianteValidator < ActiveModel::Validator
   end
 end
 class Monitoria < ApplicationRecord
-
   belongs_to :estudiante
   belongs_to :curso
 
@@ -20,4 +19,6 @@ class Monitoria < ApplicationRecord
 
   validates :estado, inclusion: { in: ESTADOS,
                                 message: "%{value} no es un estado valido" }
+  validates_with MonitoriasPorEstudianteValidator, :on => :create
+
 end
