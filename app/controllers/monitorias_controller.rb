@@ -41,6 +41,13 @@ class MonitoriasController < ApplicationController
     render json: { mensaje:"La monitoria ha sido eliminada"}, status: :ok
   end
 
+  # GET /estudiantes/estado?estado=''
+  def find_by_estado
+    monitorias = Monitoria.where(estado: params[:estado])
+
+    render json: monitorias
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_monitoria
