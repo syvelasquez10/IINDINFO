@@ -11,7 +11,7 @@ class Monitoria < ApplicationRecord
 
   ESTADOS = ['Aplico',
              'Aprobado por Coordinacion',
-             'Rechazado por Coordinación',
+             'Rechazado por Coordinacion',
              'Seleccionado por el Profesor',
              'Monitoria Aprobada',
              'Entrego Documentos',

@@ -47,6 +47,8 @@ GEM
       activesupport (>= 4.2.0)
     i18n (0.8.4)
     iconv (1.0.4)
+    json (2.1.0)
+    jwt (1.5.6)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.5)
@@ -130,6 +132,8 @@ PLATFORMS
 DEPENDENCIES
   byebug
   iconv
+  json
+  jwt
   pg
   puma (~> 3.0)
   rack-cors
