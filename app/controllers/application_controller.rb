@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::API
-  before_action :revisar_token, only: [:new, :create, :update]
 
   private
     # Metodo para revisar el token de autenticacion de firebase
