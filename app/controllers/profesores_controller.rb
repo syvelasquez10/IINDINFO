@@ -5,15 +5,15 @@ class ProfesoresController < ApplicationController
   def index
     @profesores = Profesor.all
     profesores = []
-    for profesor in profesores
-      profesores.push(profesor.as_json.merge('curso':profesor.curso.as_json))
+    for profesor in @profesores
+      profesores.push(profesor.as_json.merge('cursos':profesor.cursos.as_json))
     end
     render json: profesores
   end
 
   # GET /profesores/1
   def show
-    render json: @profesor.as_json.merge('curso':@profesor.curso.as_json)
+    render json: @profesor.as_json.merge('cursos':@profesor.cursos.as_json)
   end
 
   # POST /profesores

@@ -4,13 +4,16 @@ class CursosController < ApplicationController
   # GET /cursos
   def index
     @cursos = Curso.all
-
-    render json: @cursos
+    cursos = []
+    for curso in @cursos
+      cursos.push(curso.as_json.merge('profesores':curso.profesores.as_json))
+    end
+    render json: cursos
   end
 
   # GET /cursos/1
   def show
-    render json: @curso
+    render json: @curso.as_json.merge('profesores':@curso.profesores.as_json)
   end
 
   # POST /cursos
