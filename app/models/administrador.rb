@@ -47,9 +47,6 @@ class Administrador < ApplicationRecord
     # Los nombres de las columnas no deben ser iguales pero la cantidad de columnas si. Una columna es un elemente del array header
     header = ["N","crn","codigo_curso","secc","cred",	"nombre_curso",	"cupo","inscritos","disponibilidad",	"hora_inicio",	"hora_fin",	"salon", "capacidad_salon",	"L", "M","I",	"J","V","S", "hora_inicio2","hora_fin2","salon2","capacidad_salon2","L", "M","I",	"J","V","S","hora_inicio3","hora_fin3","salon3","capacidad_salon3","L", "M","I",	"J","V","S","profesor1","profesor2","profesor3"]
 
-    # PELIGRO Se reinicia todos los inscritos de todos los cursos
-    Curso.update_all(inscritos: 0)
-
     # Se leen las filas de la 2 en adelante
     (2..spreadsheet.last_row).each do |i|
 
@@ -72,13 +69,12 @@ class Administrador < ApplicationRecord
       # Se busca si existe un curso con el valor de la columna codigo de la fila que se lee
       curso = Curso.where(codigo_curso: row['codigo_curso']).take
 
-      # Si existe un Curso con ese carnet se actuliza, sino se crea uno nuevo en la base de datos
-      if curso.present?
-        row['inscritos'] = row['inscritos'] + curso['inscritos']
-        # Se calculan los monitores requeridos para el curso
-        monitores_requeridos = (row['inscritos']/25.to_f).ceil
-        row['monitores_requeridos'] = monitores_requeridos
+      # Se calculan los monitores requeridos para el curso
+      monitores_requeridos = (row['inscritos']/25.to_f).ceil
+      row['monitores_requeridos'] = monitores_requeridos
 
+      # Si existe un Curso con ese codigo se actuliza, sino se crea uno nuevo en la base de datos
+      if curso.present?
         if monitores_requeridos > curso['monitores_solicitados']
           estado = "Faltan Monitores por seleccionar"
         elsif monitores_requeridos < curso['monitores_solicitados']
@@ -90,12 +86,9 @@ class Administrador < ApplicationRecord
 
         curso.update(row)
       else
-        # Se calculan los monitores requeridos para el curso
-        monitores_requeridos = (row['inscritos']/25.to_f).ceil
-        row['monitores_requeridos'] = monitores_requeridos
-
         estado= "Faltan Monitores por seleccionar"
         row['estado']= estado
+
         Curso.new(row).save
       end
     end
