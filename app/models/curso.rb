@@ -1,5 +1,5 @@
 class Curso < ApplicationRecord
-  belongs_to :monitoria
+  has_many :monitorias
   has_many :asignaciones
   has_many :profesores, through: :asignaciones
 

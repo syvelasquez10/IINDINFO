@@ -6,14 +6,14 @@ class CursosController < ApplicationController
     @cursos = Curso.all
     cursos = []
     for curso in @cursos
-      cursos.push(curso.as_json.merge('profesores':curso.profesores.as_json))
+      cursos.push(curso.as_json.merge('profesores':curso.profesores.as_json).merge('monitorias':curso.monitorias.as_json))
     end
     render json: cursos
   end
 
   # GET /cursos/1
   def show
-    render json: @curso.as_json.merge('profesores':@curso.profesores.as_json)
+    render json: @curso.as_json.merge('profesores':@curso.profesores.as_json).merge('monitorias':@curso.monitorias.as_json)
   end
 
   # POST /cursos
