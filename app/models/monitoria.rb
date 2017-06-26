@@ -13,6 +13,7 @@ class Monitoria < ApplicationRecord
              'Aprobado por Coordinacion',
              'Rechazado por Coordinacion',
              'Seleccionado por el Profesor',
+             'Seleccionado por el Profesor Doble Monitor',
              'Monitoria Aprobada',
              'Entrego Documentos',
              'Firmo Convenio'].freeze
@@ -20,5 +21,9 @@ class Monitoria < ApplicationRecord
   validates :estado, inclusion: { in: ESTADOS,
                                 message: "%{value} no es un estado valido" }
   validates_with MonitoriasPorEstudianteValidator, :on => :create
+
+  def to_s
+    estado
+  end
 
 end
