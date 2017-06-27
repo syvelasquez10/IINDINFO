@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
-  before_action :revisar_token, only: [:new, :create, :update]
   include HTTParty
   base_uri 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'
+
 
   private
     # Metodo para revisar el token de autenticacion de firebase
