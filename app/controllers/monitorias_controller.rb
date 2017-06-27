@@ -25,6 +25,13 @@ class MonitoriasController < ApplicationController
           estudiante = Estudiante.create(estudiante_params)
         end
         params['monitoria']['estudiante_id'] = estudiante['id']
+      else
+        estudiante = Estudiante.find(params['estudiante_id'])
+        monitoria_estudiante = estudiante.monitorias[0]
+        if monitoria_estudiante.present?
+          monitoria_estudiante['segundo_curso'] = params['nombre_curso']
+          Monitoria.find(monitoria_estudiante['id']).update(monitoria_estudiante)
+        end
       end
       @monitoria = Monitoria.new(monitoria_params)
       if @monitoria.save
@@ -38,8 +45,10 @@ class MonitoriasController < ApplicationController
   def update
     if params['estado'] == Monitoria::ESTADOS[5]
       params['doble_monitor'] = true
+      params['segundo_curso'] = Curso.find(params['curso_id'])['nombre_curso']
     elsif params['estado'] == Monitoria::ESTADOS[4]
       params['doble_monitor'] = false
+      params['segundo_curso'] = ''
     elsif params['estado'] == Monitoria::ESTADOS[6]
 
     end
@@ -71,7 +80,7 @@ class MonitoriasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def monitoria_params
-      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso)
+      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :doble_monitor, :nombre_profesor, :segundo_curso)
     end
 
     # Only allow a trusted parameter "white list" through.

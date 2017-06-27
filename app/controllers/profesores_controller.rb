@@ -25,12 +25,19 @@ class ProfesoresController < ApplicationController
 
   # POST /profesores
   def create
-    @profesor = Profesor.new(profesor_params)
 
-    if @profesor.save
-      render json: @profesor, status: :created, location: @profesor
+    profesor_existente = Profesor.where(email: params[:email]).take
+    puts profesor_existente
+    if profesor_existente.present?
+      render json: profesor_existente
     else
-      render json: @profesor.errors, status: :unprocessable_entity
+      @profesor = Profesor.new(profesor_params)
+
+      if @profesor.save
+        render json: @profesor, status: :created, location: @profesor
+      else
+        render json: @profesor.errors, status: :unprocessable_entity
+      end
     end
   end
 

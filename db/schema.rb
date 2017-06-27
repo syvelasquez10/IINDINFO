@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170627023410) do
+ActiveRecord::Schema.define(version: 20170627194730) do
 
   create_table "administradores", force: :cascade do |t|
     t.string   "nombres"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20170627023410) do
     t.string   "semestre"
     t.boolean  "doble_monitor"
     t.string   "nombre_profesor"
+    t.string   "segundo_curso"
     t.index ["curso_id"], name: "index_monitorias_on_curso_id"
   end
 

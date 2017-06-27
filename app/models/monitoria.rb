@@ -29,6 +29,4 @@ class Monitoria < ApplicationRecord
   def to_s
     estado
   end
-
-
 end
