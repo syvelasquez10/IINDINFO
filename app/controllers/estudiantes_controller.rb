@@ -12,7 +12,7 @@ class EstudiantesController < ApplicationController
   def find_by_email
     @estudiantes = Estudiante.where(email: params[:email])
 
-    render json: @estudiantes
+    render json: @estudiantes.as_json.merge('monitorias':@estudiante.monitorias.as_json)
   end
 
   # GET /estudiantes/1

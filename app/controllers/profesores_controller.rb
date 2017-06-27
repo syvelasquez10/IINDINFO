@@ -20,7 +20,7 @@ class ProfesoresController < ApplicationController
   def find_by_email
     @profesores = Profesor.where(email: params[:email])
 
-    render json: @profesores
+    render json: @profesores.as_json.merge('cursos':@profesor.cursos.as_json)
   end
 
   # POST /profesores
