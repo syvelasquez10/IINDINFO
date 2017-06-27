@@ -73,8 +73,10 @@ class Administrador < ApplicationRecord
       monitores_requeridos = (row['inscritos']/25.to_f).ceil
       row['monitores_requeridos'] = monitores_requeridos
 
-      # Si existe un Curso con ese codigo se actuliza, sino se crea uno nuevo en la base de datos
+      # Si existe un Curso con ese codigo se actualiza, sino se crea uno nuevo en la base de datos
       if curso.present?
+
+        # Se actualiza el estado según el número de monitores requeridos
         if monitores_requeridos > curso['monitores_solicitados']
           estado = "Faltan Monitores por seleccionar"
         elsif monitores_requeridos < curso['monitores_solicitados']
@@ -84,11 +86,13 @@ class Administrador < ApplicationRecord
         end
         row['estado']= estado
 
+        # Se actualiza el curso
         curso.update(row)
       else
         estado= "Faltan Monitores por seleccionar"
         row['estado']= estado
 
+        # Se crea un nuevo curso
         Curso.new(row).save
       end
     end

@@ -13,11 +13,19 @@ class MonitoriasController < ApplicationController
 
   # GET /monitorias/1
   def show
-    render json: @monitoria.as_json.merge('estudiante':@monitoria.estudiante.as_json)
+    render json: @monitoria.as_json.merge('estudiante':@monitoria.estudiante.as_json).merge('curso':@monitoria.curso.as_json)
   end
 
   # POST /monitorias
   def create
+      if !params['estudiante_id'].present?
+        estudiante = Estudiante.where(carnet:params['estudiante']['carnet']).take
+        if !estudiante.present?
+          puts json: params['estudiante']
+          estudiante = Estudiante.create(estudiante_params)
+        end
+        params['monitoria']['estudiante_id'] = estudiante['id']
+      end
       @monitoria = Monitoria.new(monitoria_params)
       if @monitoria.save
         render json: @monitoria, status: :created, location: @monitoria
@@ -28,6 +36,13 @@ class MonitoriasController < ApplicationController
 
   # PATCH/PUT /monitorias/1
   def update
+    if params['estado'] == Monitoria::ESTADOS[5]
+      params['doble_monitor'] = true
+    elsif params['estado'] == Monitoria::ESTADOS[4]
+      params['doble_monitor'] = false
+    elsif params['estado'] == Monitoria::ESTADOS[6]
+
+    end
     if @monitoria.update(monitoria_params)
       render json: @monitoria
     else
@@ -57,5 +72,10 @@ class MonitoriasController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def monitoria_params
       params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso)
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def estudiante_params
+      params.require(:estudiante).permit(:carnet, :nombres, :programa, :celular, :prom_acum, :email, :cred_sem_actual)
     end
 end

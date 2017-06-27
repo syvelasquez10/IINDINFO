@@ -1,4 +1,6 @@
 class MonitoriasPorEstudianteValidator < ActiveModel::Validator
+
+  # Validación de que el número de monitorias de un estudiante no sea mayor a 2
   def validate(record)
     if Monitoria.where(estudiante_id:record.estudiante_id).size >= 2
       record.errors[:error] << 'Un estudiante no puede estar en más de 2 monitoria por semestre'
@@ -9,11 +11,13 @@ class Monitoria < ApplicationRecord
   belongs_to :estudiante
   belongs_to :curso
 
+  # Lista de posibles estados que puede tomar la monitoria
   ESTADOS = ['Aplico',
              'Aprobado por Coordinacion',
              'Rechazado por Coordinacion',
              'Seleccionado por el Profesor',
              'Seleccionado por el Profesor Doble Monitor',
+             'Aceptado por el Estudiante',
              'Monitoria Aprobada',
              'Entrego Documentos',
              'Firmo Convenio'].freeze
@@ -25,5 +29,6 @@ class Monitoria < ApplicationRecord
   def to_s
     estado
   end
+
 
 end

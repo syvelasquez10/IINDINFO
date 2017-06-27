@@ -16,6 +16,13 @@ class ProfesoresController < ApplicationController
     render json: @profesor.as_json.merge('cursos':@profesor.cursos.as_json)
   end
 
+  # GET /profesores/email?email={email}
+  def find_by_email
+    @profesores = Profesor.where(email: params[:email])
+
+    render json: @profesores
+  end
+
   # POST /profesores
   def create
     @profesor = Profesor.new(profesor_params)

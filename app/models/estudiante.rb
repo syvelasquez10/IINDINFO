@@ -1,4 +1,6 @@
 class MonitoriasValidator < ActiveModel::Validator
+
+  # Validación de que el número de monitorias de un estudiante no sea mayor a 2
   def validate(record)
     if record.monitorias.size >= 2
       record.errors[:error] << 'Un estudiante no puede estar en más de 2 monitoria por semestre'

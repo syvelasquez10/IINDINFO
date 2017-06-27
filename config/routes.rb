@@ -21,6 +21,9 @@ Rails.application.routes.draw do
     end
   end
   resources :profesores do
+    collection do
+      get :email, to: 'profesores#find_by_email', email: /^[a-zA-Z.\s]+\d*@uniandes.edu.co$/
+    end
     member do
       post :asignar_curso
     end
