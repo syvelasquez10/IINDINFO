@@ -18,9 +18,9 @@ class ProfesoresController < ApplicationController
 
   # GET /profesores/email?email={email}
   def find_by_email
-    @profesores = Profesor.where(email: params[:email])
+    @profesor = Profesor.where(email: params[:email]).take
 
-    render json: @profesores.as_json.merge('cursos':@profesor.cursos.as_json)
+    render json: @profesor.as_json.merge('cursos':@profesor.cursos.as_json)
   end
 
   # POST /profesores

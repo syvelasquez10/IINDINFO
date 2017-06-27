@@ -10,9 +10,9 @@ class EstudiantesController < ApplicationController
 
   # GET /estudiantes/email?email={email}
   def find_by_email
-    @estudiantes = Estudiante.where(email: params[:email])
+    @estudiante = Estudiante.where(email: params[:email]).take
 
-    render json: @estudiantes.as_json.merge('monitorias':@estudiante.monitorias.as_json)
+    render json: @estudiante.as_json.merge('monitorias':@estudiante.monitorias.as_json)
   end
 
   # GET /estudiantes/1
