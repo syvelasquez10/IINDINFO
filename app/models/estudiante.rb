@@ -12,7 +12,7 @@ class Estudiante < ApplicationRecord
 
   validates :carnet, presence: true, uniqueness: true
   validates :cred_sem_actual, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
   validates_with MonitoriasValidator, :on => :create
 
 end
