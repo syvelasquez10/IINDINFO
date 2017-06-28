@@ -21,18 +21,32 @@ class MonitoriasController < ApplicationController
       if !params['estudiante_id'].present?
         estudiante = Estudiante.where(carnet:params['estudiante']['carnet']).take
         if !estudiante.present?
-          puts json: params['estudiante']
           estudiante = Estudiante.create(estudiante_params)
         end
         params['monitoria']['estudiante_id'] = estudiante['id']
       else
         estudiante = Estudiante.find(params['estudiante_id'])
         monitoria_estudiante = estudiante.monitorias[0]
+        puts "asdsdsa"
+        puts estudiante
+        puts monitoria_estudiante
         if monitoria_estudiante.present?
           monitoria_estudiante['segundo_curso'] = params['nombre_curso']
-          monitoria_estudiante.update()
+          monitoria_estudiante['doble_monitor'] = true
+          monitoria_estudiante.update({})
+
+          params['monitoria']['doble_monitor'] = true
         end
       end
+
+      estudiante = Estudiante.find(params['estudiante_id'])
+
+      if estudiante['prom_acum'] < 3.5
+        params['monitoria']['estado'] = Monitoria::ESTADOS[2]
+      else
+        params['monitoria']['estado'] = Monitoria::ESTADOS[1]
+      end
+
       @monitoria = Monitoria.new(monitoria_params)
       if @monitoria.save
         render json: @monitoria, status: :created, location: @monitoria
@@ -47,7 +61,7 @@ class MonitoriasController < ApplicationController
       @monitoria['doble_monitor'] = true
       # @monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
     elsif params['estado'] == Monitoria::ESTADOS[3]
-      @monitoria['doble_monitor'] = false
+      @monitoria['doble_monitor'] = ''
       # @monitoria['segundo_curso'] = ''
     elsif params['estado'] == Monitoria::ESTADOS[5]
 

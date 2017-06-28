@@ -13,9 +13,9 @@ class Monitoria < ApplicationRecord
 
   # Lista de posibles estados que puede tomar la monitoria
   ESTADOS = ['Aplico',
-             'Aprobado por Coordinacion',
+             'Cumple Promedio',
              'Rechazado por Coordinacion',
-             'Seleccionado por el Profesor',
+             'Seleccionado por el Profesor Monitor Sencillo',
              'Seleccionado por el Profesor Doble Monitor',
              'Aceptado por el Estudiante',
              'Monitoria Aprobada',

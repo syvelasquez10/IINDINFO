@@ -63,37 +63,39 @@ class Administrador < ApplicationRecord
       # Se carga por ultimo el numero de inscritos debido a que si se hacia antes se generaria error al aplicar strip sobre un número
       row['inscritos']= row_file.slice('inscritos')['inscritos']
 
-      # se inicializa el atributo
-      row['monitores_solicitados']= 0
+      if row['inscritos'] > 0
+        # se inicializa el atributo
+        row['monitores_solicitados']= 0
 
-      # Se busca si existe un curso con el valor de la columna codigo de la fila que se lee
-      curso = Curso.where(codigo_curso: row['codigo_curso']).take
+        # Se busca si existe un curso con el valor de la columna codigo de la fila que se lee
+        curso = Curso.where(codigo_curso: row['codigo_curso']).take
 
-      # Se calculan los monitores requeridos para el curso
-      monitores_requeridos = (row['inscritos']/25.to_f).ceil
-      row['monitores_requeridos'] = monitores_requeridos
+        # Se calculan los monitores requeridos para el curso
+        monitores_requeridos = (row['inscritos']/25.to_f).ceil
+        row['monitores_requeridos'] = monitores_requeridos
 
-      # Si existe un Curso con ese codigo se actualiza, sino se crea uno nuevo en la base de datos
-      if curso.present?
+        # Si existe un Curso con ese codigo se actualiza, sino se crea uno nuevo en la base de datos
+        if curso.present?
 
-        # Se actualiza el estado según el número de monitores requeridos
-        if monitores_requeridos > curso['monitores_solicitados']
-          estado = "Faltan Monitores por seleccionar"
-        elsif monitores_requeridos < curso['monitores_solicitados']
-          estado = "Hay mas monitores solicitados de los que se requieren"
+          # Se actualiza el estado según el número de monitores requeridos
+          if monitores_requeridos > curso['monitores_solicitados']
+            estado = "Faltan Monitores por seleccionar"
+          elsif monitores_requeridos < curso['monitores_solicitados']
+            estado = "Hay mas monitores solicitados de los que se requieren"
+          else
+            estado = "Cantidad adecuada de monitores"
+          end
+          row['estado']= estado
+
+          # Se actualiza el curso
+          curso.update(row)
         else
-          estado = "Cantidad adecuada de monitores"
+          estado= "Faltan Monitores por seleccionar"
+          row['estado']= estado
+
+          # Se crea un nuevo curso
+          Curso.new(row).save
         end
-        row['estado']= estado
-
-        # Se actualiza el curso
-        curso.update(row)
-      else
-        estado= "Faltan Monitores por seleccionar"
-        row['estado']= estado
-
-        # Se crea un nuevo curso
-        Curso.new(row).save
       end
     end
 
