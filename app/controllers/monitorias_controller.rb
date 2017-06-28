@@ -43,13 +43,13 @@ class MonitoriasController < ApplicationController
 
   # PATCH/PUT /monitorias/1
   def update
-    if params['estado'] == Monitoria::ESTADOS[5]
-      params['doble_monitor'] = true
-      params['segundo_curso'] = Curso.find(params['curso_id'])['nombre_curso']
-    elsif params['estado'] == Monitoria::ESTADOS[4]
-      params['doble_monitor'] = false
-      params['segundo_curso'] = ''
-    elsif params['estado'] == Monitoria::ESTADOS[6]
+    if params['estado'] == Monitoria::ESTADOS[4]
+      @monitoria['doble_monitor'] = true
+      # @monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
+    elsif params['estado'] == Monitoria::ESTADOS[3]
+      @monitoria['doble_monitor'] = false
+      # @monitoria['segundo_curso'] = ''
+    elsif params['estado'] == Monitoria::ESTADOS[5]
 
     end
     if @monitoria.update(monitoria_params)
