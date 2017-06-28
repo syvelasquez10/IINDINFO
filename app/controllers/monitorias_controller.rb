@@ -30,7 +30,7 @@ class MonitoriasController < ApplicationController
         monitoria_estudiante = estudiante.monitorias[0]
         if monitoria_estudiante.present?
           monitoria_estudiante['segundo_curso'] = params['nombre_curso']
-          Monitoria.find(monitoria_estudiante['id']).update(monitoria_estudiante)
+          monitoria_estudiante.update()
         end
       end
       @monitoria = Monitoria.new(monitoria_params)
