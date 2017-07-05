@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  semestre: MyString
+  charla: false
+  comentarios: MyText
+  estudiante_id: 
+
+two:
+  semestre: MyString
+  charla: false
+  comentarios: MyText
+  estudiante_id: 

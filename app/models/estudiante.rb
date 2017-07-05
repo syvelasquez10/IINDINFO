@@ -9,6 +9,7 @@ class MonitoriasValidator < ActiveModel::Validator
 end
 class Estudiante < ApplicationRecord
   has_many :monitorias
+  has_many :practicas
 
   validates :carnet, presence: true, uniqueness: true
   validates :cred_sem_actual, presence: true

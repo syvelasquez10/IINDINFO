@@ -27,7 +27,6 @@ class ProfesoresController < ApplicationController
   def create
 
     profesor_existente = Profesor.where(email: params[:email]).take
-    puts profesor_existente
     if profesor_existente.present?
       render json: profesor_existente
     else

@@ -18,30 +18,33 @@ class MonitoriasController < ApplicationController
 
   # POST /monitorias
   def create
+      # Se revisa si se quiere crear una monitoria para un estudiante que no existe
+      # Si el parametro estudiante_id no se encuentra en el body se asume que se quiere crear una monitoria para un estudiante que no existe
       if !params['estudiante_id'].present?
+        # Se revisa si ya existe un estudiante con el carnet enviado
+        # Este caso es aquel en el que el estudiante ya existe, pero por algun motivo no puede aplicar el mismo a la monitoria
         estudiante = Estudiante.where(carnet:params['estudiante']['carnet']).take
         if !estudiante.present?
+          # Si no existe un estudiante con ese carnet entonces se crea uno
           estudiante = Estudiante.create(estudiante_params)
         end
+        # Se agrega el id del estudiante a la monitoria para que se prosiga con normalidad
         params['monitoria']['estudiante_id'] = estudiante['id']
-      else
-        estudiante = Estudiante.find(params['estudiante_id'])
-        monitoria_estudiante = estudiante.monitorias[0]
-        puts "asdsdsa"
-        puts estudiante
-        puts monitoria_estudiante
-        if monitoria_estudiante.present?
-          monitoria_estudiante['segundo_curso'] = params['nombre_curso']
-          monitoria_estudiante['doble_monitor'] = true
-          monitoria_estudiante.update({})
-
-          params['monitoria']['doble_monitor'] = true
-        end
       end
 
-      estudiante = Estudiante.find(params['estudiante_id'])
+      # El estudiante se necesita para dos revisiones mas adelante
+      # Con el if nos aseguramos que tenemos algo en la variable estudiante
+      if !estudiante.present?
+        estudiante = Estudiante.find(params['estudiante_id'])
+      end
 
+      # Esta revision buscar ver si el estudiante ya tiene otra monitoria aprobada
+      Monitoria.revisar_doble_monitoria(estudiante)
+
+      # Se revisa si el promedio del estudiante cumple para la monitoria
+      # Dependiendo del promedio se le asigna un estado a la monitoria
       if estudiante['prom_acum'] < 3.5
+        # Los estados son de la lista de estados que se encuentra en monitoria.rb
         params['monitoria']['estado'] = Monitoria::ESTADOS[2]
       else
         params['monitoria']['estado'] = Monitoria::ESTADOS[1]
@@ -57,9 +60,12 @@ class MonitoriasController < ApplicationController
 
   # PATCH/PUT /monitorias/1
   def update
+
+    # Si el estado al que se quiere cambiar la monitoria es el de doble monitoria
     if params['estado'] == Monitoria::ESTADOS[4]
       @monitoria['doble_monitor'] = true
-      # @monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
+      @monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
+    # Si el estado al que se cambia la monitoria es a seleccionado por el profesor
     elsif params['estado'] == Monitoria::ESTADOS[3]
       @monitoria['doble_monitor'] = ''
       # @monitoria['segundo_curso'] = ''
