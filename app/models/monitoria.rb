@@ -25,7 +25,7 @@ class Monitoria < ApplicationRecord
   validates :estado, inclusion: { in: ESTADOS,
                                 message: "%{value} no es un estado valido" }
   validates_with MonitoriasPorEstudianteValidator, :on => :create
-  
+
   def to_s
     estado
   end
