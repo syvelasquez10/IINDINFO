@@ -42,11 +42,11 @@ class MonitoriasController < ApplicationController
       monitoria_estudiante = estudiante.monitorias[0]
       if monitoria_estudiante.present?
         monitoria_estudiante['segundo_curso'] = params['nombre_curso']
-        monitoria_estudiante['doble_monitor'] = true
+        # monitoria_estudiante['doble_monitor'] = true
         monitoria_estudiante.update(monitoria_estudiante.attributes)
 
-        params['monitoria']['doble_monitor'] = true
-        params['monitoria']['segundo_curso'] = monitoria_estudiante['nombre_curso']
+        # params['monitoria']['doble_monitor'] = true
+        params['monitoria']['segundo_curso'] = Curso.find(monitoria_estudiante['cuso_id'])['nombre_curso']
       end
 
       # Se revisa si el promedio del estudiante cumple para la monitoria
@@ -72,7 +72,7 @@ class MonitoriasController < ApplicationController
     # Si el estado al que se quiere cambiar la monitoria es el de doble monitoria
     if params['estado'] == Monitoria::ESTADOS[4]
       @monitoria['doble_monitor'] = true
-      @monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
+      #@monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
     # Si el estado al que se cambia la monitoria es a seleccionado por el profesor
     elsif params['estado'] == Monitoria::ESTADOS[3]
       @monitoria['doble_monitor'] = ''
