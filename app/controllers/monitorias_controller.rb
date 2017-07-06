@@ -46,7 +46,7 @@ class MonitoriasController < ApplicationController
         monitoria_estudiante.update(monitoria_estudiante.attributes)
 
         # params['monitoria']['doble_monitor'] = true
-        params['monitoria']['segundo_curso'] = Curso.find(monitoria_estudiante['cuso_id'])['nombre_curso']
+        params['monitoria']['segundo_curso'] = Curso.find(monitoria_estudiante['curso_id'])['nombre_curso']
       end
 
       # Se revisa si el promedio del estudiante cumple para la monitoria
