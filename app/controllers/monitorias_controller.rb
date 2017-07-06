@@ -68,7 +68,7 @@ class MonitoriasController < ApplicationController
     # Si el estado al que se cambia la monitoria es a seleccionado por el profesor
     elsif params['estado'] == Monitoria::ESTADOS[3]
       @monitoria['doble_monitor'] = ''
-      # @monitoria['segundo_curso'] = ''
+      @monitoria['segundo_curso'] = ''
     elsif params['estado'] == Monitoria::ESTADOS[5]
 
     end

@@ -16,7 +16,7 @@ class Monitoria < ApplicationRecord
              'Aprobado por Promedio',
              'Rechazado por Promedio',
              'Seleccionado por el Profesor Monitor Sencillo',
-             'Seleccionado por el Profesor Doble Monitor',
+             'Seleccionado por el Profesor Monitor Doble ',
              'Aceptado por el Estudiante',
              'Monitoria Aprobada',
              'Entrego Documentos',
