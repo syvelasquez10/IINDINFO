@@ -39,7 +39,14 @@ class MonitoriasController < ApplicationController
       end
 
       # Esta revision buscar ver si el estudiante ya tiene otra monitoria aprobada
-      Monitoria.revisar_doble_monitoria(estudiante)
+      monitoria_estudiante = estudiante.monitorias[0]
+      if monitoria_estudiante.present?
+        monitoria_estudiante['segundo_curso'] = params['nombre_curso']
+        monitoria_estudiante['doble_monitor'] = true
+        monitoria_estudiante.update(monitoria_estudiante.attributes)
+
+        params['monitoria']['doble_monitor'] = true
+      end
 
       # Se revisa si el promedio del estudiante cumple para la monitoria
       # Dependiendo del promedio se le asigna un estado a la monitoria

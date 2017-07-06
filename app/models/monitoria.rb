@@ -25,20 +25,7 @@ class Monitoria < ApplicationRecord
   validates :estado, inclusion: { in: ESTADOS,
                                 message: "%{value} no es un estado valido" }
   validates_with MonitoriasPorEstudianteValidator, :on => :create
-
-  # Metodo encargado de revisar si un estudiante tiene otra monitoria y agregarla a segundo curso de ser asi
-  def self.revisar_doble_monitoria(estudiante)
-    monitoria_estudiante = estudiante.monitorias[0]
-    if monitoria_estudiante.present?
-      puts params['nombre_curso']
-      monitoria_estudiante['segundo_curso'] = params['nombre_curso']
-      monitoria_estudiante['doble_monitor'] = true
-      monitoria_estudiante.update(monitoria_estudiante.attributes)
-
-      params['monitoria']['doble_monitor'] = true
-    end
-  end
-
+  
   def to_s
     estado
   end
