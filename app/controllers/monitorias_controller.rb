@@ -72,11 +72,11 @@ class MonitoriasController < ApplicationController
     # Si el estado al que se quiere cambiar la monitoria es el de doble monitoria
     if params['estado'] == Monitoria::ESTADOS[4]
       @monitoria['doble_monitor'] = true
-      #@monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
+      # @monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
     # Si el estado al que se cambia la monitoria es a seleccionado por el profesor
     elsif params['estado'] == Monitoria::ESTADOS[3]
       @monitoria['doble_monitor'] = ''
-      @monitoria['segundo_curso'] = ''
+      # @monitoria['segundo_curso'] = ''
     elsif params['estado'] == Monitoria::ESTADOS[5]
 
     end
