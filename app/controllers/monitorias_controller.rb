@@ -68,15 +68,19 @@ class MonitoriasController < ApplicationController
 
   # PATCH/PUT /monitorias/1
   def update
-
-    # Si el estado al que se quiere cambiar la monitoria es el de doble monitoria
-    if params['estado'] == Monitoria::ESTADOS[4]
-      @monitoria['doble_monitor'] = true
-      # @monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
     # Si el estado al que se cambia la monitoria es a seleccionado por el profesor
+    if params['estado'] == Monitoria::ESTADOS[1]
+      @monitoria['doble_monitor'] != ''
+      @monitoria['segundo_curso'] != ''
+      @monitoria['nombre_profesor'] = ''
     elsif params['estado'] == Monitoria::ESTADOS[3]
       @monitoria['doble_monitor'] = ''
+      @monitoria['nombre_profesor'] = ''
       # @monitoria['segundo_curso'] = ''
+    # Si el estado al que se cambia la monitoria es a seleccionado por el profesor
+    elsif params['estado'] == Monitoria::ESTADOS[4]
+      @monitoria['doble_monitor'] = true
+      # @monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
     elsif params['estado'] == Monitoria::ESTADOS[5]
 
     end
@@ -108,7 +112,7 @@ class MonitoriasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def monitoria_params
-      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :doble_monitor, :nombre_profesor, :segundo_curso)
+      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :doble_monitor, :nombre_profesor, :segundo_curso, :monitoria_otro_departamento, :nota_monitoria)
     end
 
     # Only allow a trusted parameter "white list" through.

@@ -4,13 +4,16 @@ class PracticasController < ApplicationController
   # GET /practicas
   def index
     @practicas = Practica.all
-
-    render json: @practicas
+    practicas = []
+    for practica in @practicas
+      practicas.push(practica.as_json.merge('estudiante':practica.estudiante.as_json))
+    end
+    render json: practicas
   end
 
   # GET /practicas/1
   def show
-    render json: @practica
+    render json: @practica.as_json.merge('estudiante':@monitoria.estudiante.as_json)
   end
 
   # POST /practicas
@@ -46,6 +49,6 @@ class PracticasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def practica_params
-      params.require(:practica).permit(:semestre, :charla, :comentarios, :estudiante_id)
+      params.require(:practica).permit(:semestre, :charla, :comentarios, :estudiante_id, :estado)
     end
 end
