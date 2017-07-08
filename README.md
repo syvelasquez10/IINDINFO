@@ -1,24 +1,5 @@
-# README
+# IINDINFO
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Ruby on Rails project is develop for the deparment of Industrial Engineerign at Universidad de Los Andes, Colombia
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+It covers some of the process between the students and the administrative team of the deparment.
