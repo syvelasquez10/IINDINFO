@@ -1,7 +1,7 @@
 class Practica < ApplicationRecord
   belongs_to :estudiante
 
-  # Lista de posibles estados que puede tomar la monitoria
+  # Lista de posibles estados que puede tomar la practica
   ESTADOS = ['Aplico',
              'Aprobado',
              'Rechazado'].freeze

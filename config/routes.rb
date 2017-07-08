@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     collection do
       post :cargar_archivo_estudiantes
       post :cargar_archivo_cursos
+      post :cargar_archivo_profesores
     end
     member do
 

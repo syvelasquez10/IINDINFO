@@ -15,6 +15,7 @@ class Monitoria < ApplicationRecord
   ESTADOS = ['Aplico',
              'Aprobado por Promedio',
              'Rechazado por Promedio',
+             'No Seleccionado por el Profesor',
              'Seleccionado por el Profesor Monitor Sencillo',
              'Seleccionado por el Profesor Monitor Doble',
              'Aceptado por el Estudiante',

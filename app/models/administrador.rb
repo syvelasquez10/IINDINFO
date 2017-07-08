@@ -1,5 +1,5 @@
 class Administrador < ApplicationRecord
-  #Metodo encargado de tomar un archivo de estudiantes y crear una entidad Estudiante pro cada fila del archivo, el archivo debe tener el formato indicado en el array header
+  # Metodo encargado de tomar un archivo de estudiantes y crear una entidad Estudiante por cada fila del archivo, el archivo debe tener el formato indicado en el array header
   def self.import_estudiantes(file)
     # Se abre el archivo
     spreadsheet = open_spreadsheet(file)
@@ -38,7 +38,7 @@ class Administrador < ApplicationRecord
     return :status => "OK"
   end
 
-  #Metodo encargado de tomar un archivo de cursos y crear una entidad Curso pro cada fila del archivo, el archivo debe tener el formato indicado en el array header
+  # Metodo encargado de tomar un archivo de cursos y crear una entidad Curso por cada fila del archivo, el archivo debe tener el formato indicado en el array header
   def self.import_cursos(file)
     # Se abre el archivo
     spreadsheet = open_spreadsheet(file)
@@ -102,7 +102,33 @@ class Administrador < ApplicationRecord
     return :status => "OK"
   end
 
-  #Metodo encargado de preparar un archvio CSV o EXCEL para poder usarse en el sistema
+  # Metodo encargado de tomar un archivo de profesores y crear una entidad Profesor por cada fila del archivo, el archivo debe tener el formato indicado en el array header
+  def self.import_profesores(file)
+    # Se abre el archivo
+    spreadsheet = open_spreadsheet(file)
+
+    # Se definen los nombres que se utilizaran en la aplicacion para las columnas del archivo
+    # Los nombres de las columnas no deben ser iguales pero la cantidad de columnas si. Una columna es un elemente del array header
+    header = ["nombres","apellidos","email","tipo"]
+    # Se leen las filas de la 2 en adelante
+    (2..spreadsheet.last_row).each do |i|
+      # Al leer una fila se carga en un hash en el que el key es el nombre de la columna y el value es el valor de la columna en esa fila.
+      # El key se toma del array de header y el value del archivo
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+
+      # Se busca si existe un profesor con el valor de la columna carnet de la fila que se lee
+      profesor = Profesor.where(email: row["email"]).take
+      # Si existe un profesor con ese email entonces se actualiza, sino entonces se crea uno nuevo en la base de datos
+      if profesor.present?
+        profesor.update(row)
+      else
+        Profesor.new(row).save
+      end
+    end
+    return :status => "OK"
+  end
+
+  # Metodo encargado de preparar un archvio CSV o EXCEL para poder usarse en el sistema
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
       when ".csv" then Roo::CSV.new(file.path)

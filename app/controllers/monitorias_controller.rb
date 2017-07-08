@@ -97,7 +97,7 @@ class MonitoriasController < ApplicationController
     render json: { mensaje:"La monitoria ha sido eliminada"}, status: :ok
   end
 
-  # GET /estudiantes/estado?estado=''
+  # GET /monitorias/estado?estado=''
   def find_by_estado
     monitorias = Monitoria.where(estado: params[:estado])
 
@@ -112,7 +112,7 @@ class MonitoriasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def monitoria_params
-      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :doble_monitor, :nombre_profesor, :segundo_curso, :monitoria_otro_departamento, :nota_monitoria)
+      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :doble_monitor, :nombre_profesor, :segundo_curso, :monitoria_otro_departamento, :nota_monitoria, :entrego_documentos, :firmo_convenio, :estado, :estado_segundo_curso)
     end
 
     # Only allow a trusted parameter "white list" through.

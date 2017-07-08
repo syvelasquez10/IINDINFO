@@ -41,12 +41,16 @@ class AdministradoresController < ApplicationController
   # GET /administradores/cargar_archivo_estudiantes
   def cargar_archivo_estudiantes
     render :json => Administrador.import_estudiantes(params[:file])
-
   end
 
   # GET /administradores/cargar_archivo_cursos
   def cargar_archivo_cursos
     render :json => Administrador.import_cursos(params[:file])
+  end
+
+  # GET /administradores/cargar_archivo_profesores
+  def cargar_archivo_profesores
+    render :json => Administrador.import_profesores(params[:file])
   end
 
   private

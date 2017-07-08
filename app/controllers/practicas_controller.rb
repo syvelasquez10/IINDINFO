@@ -1,6 +1,9 @@
 class PracticasController < ApplicationController
   before_action :set_practica, only: [:show, :update, :destroy]
 
+  PROMEDIO_PRACTICA = 3.3
+  SEMESTRE_MINIMO_PRACTICA = 4
+
   # GET /practicas
   def index
     @practicas = Practica.all
@@ -18,12 +21,19 @@ class PracticasController < ApplicationController
 
   # POST /practicas
   def create
-    @practica = Practica.new(practica_params)
-
-    if @practica.save
-      render json: @practica, status: :created, location: @practica
+    estudiante = Estudiante.find(practica_params['estudiante_id'])
+    if estudiante['promedio'] < PROMEDIO_PRACTICA
+      render json: :error, 'El promedio para aplicar a práctica debe ser mayor a %s' % [PROMEDIO_PRACTICA]
+    elsif estudiante['ssc'] < SEMESTRE_MINIMO_PRACTICA
+      render json: :error, 'Para hacer práctica se debe estar en un semestre mayor o igual a %s' % [SEMESTRE_MINIMO_PRACTICA]
     else
-      render json: @practica.errors, status: :unprocessable_entity
+      @practica = Practica.new(practica_params)
+
+      if @practica.save
+        render json: @practica, status: :created, location: @practica
+      else
+        render json: @practica.errors, status: :unprocessable_entity
+      end
     end
   end
 
