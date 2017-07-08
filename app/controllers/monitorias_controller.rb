@@ -42,11 +42,13 @@ class MonitoriasController < ApplicationController
       monitoria_estudiante = estudiante.monitorias[0]
       if monitoria_estudiante.present?
         monitoria_estudiante['segundo_curso'] = params['nombre_curso']
+        monitoria_estudiante['estado_segundo_curso'] = params['estado']
         # monitoria_estudiante['doble_monitor'] = true
         monitoria_estudiante.update(monitoria_estudiante.attributes)
 
         # params['monitoria']['doble_monitor'] = true
         params['monitoria']['segundo_curso'] = Curso.find(monitoria_estudiante['curso_id'])['nombre_curso']
+        params['monitoria']['estado_segundo_curso'] = monitoria_estudiante['estado']
       end
 
       # Se revisa si el promedio del estudiante cumple para la monitoria
@@ -68,22 +70,36 @@ class MonitoriasController < ApplicationController
 
   # PATCH/PUT /monitorias/1
   def update
+    estado = -1
     # Si el estado al que se cambia la monitoria es a seleccionado por el profesor
     if params['estado'] == Monitoria::ESTADOS[1]
       @monitoria['doble_monitor'] != ''
-      @monitoria['segundo_curso'] != ''
       @monitoria['nombre_profesor'] = ''
+      estado = 1
+    elsif params['estado'] == Monitoria::ESTADOS[2]
+      estado = 2
     elsif params['estado'] == Monitoria::ESTADOS[3]
       @monitoria['doble_monitor'] = ''
       @monitoria['nombre_profesor'] = ''
-      # @monitoria['segundo_curso'] = ''
-    # Si el estado al que se cambia la monitoria es a seleccionado por el profesor
+      estado = 3
     elsif params['estado'] == Monitoria::ESTADOS[4]
       @monitoria['doble_monitor'] = true
-      # @monitoria['segundo_curso'] = Curso.find(@monitoria['curso_id'])['nombre_curso']
+      estado = 4
     elsif params['estado'] == Monitoria::ESTADOS[5]
-
+      @monitoria['doble_monitor'] != ''
+      estado = 5
+    elsif params['estado'] == Monitoria::ESTADOS[6]
+      estado = 6
+    elsif params['estado'] == Monitoria::ESTADOS[7]
+      estado = 7
+    elsif params['estado'] == Monitoria::ESTADOS[8]
+      estado = 8
     end
+
+    if estado != -1
+      Monitoria.actualizar_estado_segundo_curso(@monitoria,Monitoria::ESTADOS[estado])
+    end
+
     if @monitoria.update(monitoria_params)
       render json: @monitoria
     else

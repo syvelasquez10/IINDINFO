@@ -15,9 +15,9 @@ class Monitoria < ApplicationRecord
   ESTADOS = ['Aplico',
              'Aprobado por Promedio',
              'Rechazado por Promedio',
-             'No Seleccionado por el Profesor',
              'Seleccionado por el Profesor Monitor Sencillo',
              'Seleccionado por el Profesor Monitor Doble',
+             'No Seleccionado por el Profesor',
              'Aceptado por el Estudiante',
              'Monitoria Aprobada',
              'Entrego Documentos',
@@ -26,6 +26,18 @@ class Monitoria < ApplicationRecord
   validates :estado, inclusion: { in: ESTADOS,
                                 message: "%{value} no es un estado valido" }
   validates_with MonitoriasPorEstudianteValidator, :on => :create
+
+  def self.actualizar_estado_segundo_curso(monitoria, estado)
+    estudiante = Estudiante.find(monitoria['estudiante_id'])
+    monitorias = estudiante.monitorias
+    if monitorias.present? && monitorias.size > 1
+      if monitorias[0]['id'] != monitoria['id']
+        monitorias[0].update(:estado => estado)
+      else
+        monitorias[1].update(:estado_segundo_curso => estado)
+      end
+    end
+  end
 
   def to_s
     estado
