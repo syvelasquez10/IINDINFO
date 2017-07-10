@@ -21,4 +21,5 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'rol', 'roles'
   inflect.irregular 'monitoria', 'monitorias'
   inflect.irregular 'asignacion', 'asignaciones'
+  inflect.irregular 'cita', 'citas'
 end
