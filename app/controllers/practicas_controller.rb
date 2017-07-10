@@ -23,9 +23,11 @@ class PracticasController < ApplicationController
   def create
     estudiante = Estudiante.find(practica_params['estudiante_id'])
     if estudiante['promedio'] < PROMEDIO_PRACTICA
-      render json: :error, 'El promedio para aplicar a práctica debe ser mayor a %s' % [PROMEDIO_PRACTICA]
+      respuesta = 'El promedio para aplicar a práctica debe ser mayor a %s' % [PROMEDIO_PRACTICA]
+      render json: {:error => respuesta}
     elsif estudiante['ssc'] < SEMESTRE_MINIMO_PRACTICA
-      render json: :error, 'Para hacer práctica se debe estar en un semestre mayor o igual a %s' % [SEMESTRE_MINIMO_PRACTICA]
+      respuesta = 'Para hacer práctica se debe estar en un semestre mayor o igual a %s' % [SEMESTRE_MINIMO_PRACTICA]
+      render json: {:error => respuesta}
     else
       @practica = Practica.new(practica_params)
 
