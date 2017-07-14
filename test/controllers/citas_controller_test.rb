@@ -12,7 +12,7 @@ class CitasControllerTest < ActionDispatch::IntegrationTest
 
   test "should create cita" do
     assert_difference('Cita.count') do
-      post citas_url, params: { cita: { asistio: @cita.asistio, cancelada: @cita.cancelada, cancelada_por: @cita.cancelada_por, cancelada_por_id: @cita.cancelada_por_id, comentarios: @cita.comentarios, fecha_cancelacion: @cita.fecha_cancelacion, fecha_fin: @cita.fecha_fin, fecha_inicio: @cita.fecha_inicio, informacion_para_cita: @cita.informacion_para_cita, tipo_cita: @cita.tipo_cita } }, as: :json
+      post citas_url, params: { cita: { asistio: @cita.asistio, cancelada: @cita.cancelada, cancelada_por: @cita.cancelada_por, cancelada_por_id: @cita.cancelada_por_id, comentarios: @cita.comentarios, fecha_cancelacion: @cita.fecha_cancelacion, hora_fin: @cita.hora_fin, hora_inicio: @cita.hora_inicio, informacion_para_cita: @cita.informacion_para_cita, tipo_cita: @cita.tipo_cita } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class CitasControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update cita" do
-    patch cita_url(@cita), params: { cita: { asistio: @cita.asistio, cancelada: @cita.cancelada, cancelada_por: @cita.cancelada_por, cancelada_por_id: @cita.cancelada_por_id, comentarios: @cita.comentarios, fecha_cancelacion: @cita.fecha_cancelacion, fecha_fin: @cita.fecha_fin, fecha_inicio: @cita.fecha_inicio, informacion_para_cita: @cita.informacion_para_cita, tipo_cita: @cita.tipo_cita } }, as: :json
+    patch cita_url(@cita), params: { cita: { asistio: @cita.asistio, cancelada: @cita.cancelada, cancelada_por: @cita.cancelada_por, cancelada_por_id: @cita.cancelada_por_id, comentarios: @cita.comentarios, fecha_cancelacion: @cita.fecha_cancelacion, hora_fin: @cita.hora_fin, hora_inicio: @cita.hora_inicio, informacion_para_cita: @cita.informacion_para_cita, tipo_cita: @cita.tipo_cita } }, as: :json
     assert_response 200
   end
 

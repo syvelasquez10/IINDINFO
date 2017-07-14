@@ -8,9 +8,9 @@ one:
   cancelada_por: MyString
   cancelada_por_id: 1
   fecha_cancelacion: MyString
-  fecha_inicio: MyString
-  fecha_fin: MyString
   informacion_para_cita: MyText
+  hora_inicio: MyString
+  hora_fin: MyString
 
 two:
   tipo_cita: MyString
@@ -20,6 +20,6 @@ two:
   cancelada_por: MyString
   cancelada_por_id: 1
   fecha_cancelacion: MyString
-  fecha_inicio: MyString
-  fecha_fin: MyString
   informacion_para_cita: MyText
+  hora_inicio: MyString
+  hora_fin: MyString

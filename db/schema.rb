@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714011427) do
+ActiveRecord::Schema.define(version: 20170714202123) do
 
   create_table "administradores", force: :cascade do |t|
     t.string   "nombres"
@@ -76,6 +76,15 @@ ActiveRecord::Schema.define(version: 20170714011427) do
     t.decimal  "cred_sem_actual"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "horarios", force: :cascade do |t|
+    t.string   "fecha_inicio"
+    t.string   "fecha_fin"
+    t.boolean  "disponible"
+    t.integer  "administrador_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "materia_fantasmas", force: :cascade do |t|
