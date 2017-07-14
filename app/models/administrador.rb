@@ -1,5 +1,6 @@
 class Administrador < ApplicationRecord
   has_many :horarios
+
   # Metodo encargado de tomar un archivo de estudiantes y crear una entidad Estudiante por cada fila del archivo, el archivo debe tener el formato indicado en el array header
   def self.import_estudiantes(file)
     # Se abre el archivo
