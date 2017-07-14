@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710004125) do
+ActiveRecord::Schema.define(version: 20170714011427) do
 
   create_table "administradores", force: :cascade do |t|
     t.string   "nombres"
@@ -123,6 +123,17 @@ ActiveRecord::Schema.define(version: 20170710004125) do
     t.string   "tipo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "saber_pros", force: :cascade do |t|
+    t.string   "tipo_documento"
+    t.string   "fecha_nacimiento"
+    t.boolean  "pago"
+    t.text     "observaciones"
+    t.boolean  "inscrito"
+    t.integer  "estudiante_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
 end

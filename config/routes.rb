@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :saber_pros do
+    collection do
+      post :cargar_archivo_pagos
+    end
+  end
   resources :citas
   resources :practicas
   resources :materia_fantasmas
