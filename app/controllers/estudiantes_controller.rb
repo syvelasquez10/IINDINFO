@@ -6,12 +6,7 @@ class EstudiantesController < ApplicationController
     @estudiantes = Estudiante.all
     estudiantes = []
     for estudiante in @estudiantes
-      @monitorias = estudiante.monitorias
-      monitorias = []
-      for monitoria in @monitorias
-        monitorias.push(monitoria.as_json.merge('curso':monitoria.curso.as_json))
-      end
-      estudiantes.push(estudiante.as_json.merge('monitorias':monitorias.as_json).merge('saberPro':estudiante.saberPro.as_json))
+      estudiantes.push(estudiante.as_json.merge('monitorias':estudiante.monitorias.as_json).merge('saberPro':estudiante.saberPro.as_json))
     end
     render json: estudiantes
   end
