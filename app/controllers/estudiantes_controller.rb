@@ -15,12 +15,12 @@ class EstudiantesController < ApplicationController
   def find_by_email
     @estudiante = Estudiante.where(email: params[:email]).take
 
-    render json: @estudiante.as_json.merge('monitorias':@estudiante.monitorias.as_json).merge('practicas':estudiante.practicas.as_json).merge('saberPro':estudiante.saberPro.as_json)
+    render json: @estudiante.as_json.merge('monitorias':@estudiante.monitorias.as_json).merge('practicas':@estudiante.practicas.as_json).merge('saberPro':@estudiante.saberPro.as_json)
   end
 
   # GET /estudiantes/1
   def show
-    render json: @estudiante.as_json.merge('monitorias':@estudiante.monitorias.as_json).merge('practicas':estudiante.practicas.as_json).merge('saberPro':estudiante.saberPro.as_json)
+    render json: @estudiante.as_json.merge('monitorias':@estudiante.monitorias.as_json).merge('practicas':@estudiante.practicas.as_json).merge('saberPro':@estudiante.saberPro.as_json)
   end
 
   # POST /estudiantes
