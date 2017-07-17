@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714202123) do
+ActiveRecord::Schema.define(version: 20170715035500) do
 
   create_table "administradores", force: :cascade do |t|
     t.string   "nombres"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 20170714202123) do
     t.integer  "administrador_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "tipo_cita"
   end
 
   create_table "materia_fantasmas", force: :cascade do |t|
@@ -112,6 +113,8 @@ ActiveRecord::Schema.define(version: 20170714202123) do
     t.boolean  "entrego_documentos"
     t.boolean  "firmo_convenio"
     t.string   "estado_segundo_curso"
+    t.boolean  "ha_sido_monitor"
+    t.text     "comentarios_estudiante"
     t.index ["curso_id"], name: "index_monitorias_on_curso_id"
   end
 
@@ -123,6 +126,7 @@ ActiveRecord::Schema.define(version: 20170714202123) do
     t.string   "estado"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "fecha_limite"
   end
 
   create_table "profesores", force: :cascade do |t|
