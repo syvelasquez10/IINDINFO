@@ -11,6 +11,7 @@ class Estudiante < ApplicationRecord
   has_many :monitorias
   has_many :practicas
   has_one :saberPro
+  has_many :citas
 
   validates :carnet, presence: true, uniqueness: true
   validates :cred_sem_actual, presence: true
