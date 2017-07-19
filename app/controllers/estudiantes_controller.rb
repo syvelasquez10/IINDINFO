@@ -11,16 +11,56 @@ class EstudiantesController < ApplicationController
     render json: estudiantes
   end
 
+  # GET /estudiantes/monitorias
+  def estudiantes_monitorias
+    @estudiantes = Estudiante.all
+    estudiantes = []
+    for estudiante in @estudiantes
+      estudiantes.push(estudiante.as_json.merge('monitorias':estudiante.monitorias.as_json))
+    end
+    render json: estudiantes
+  end
+
+  # GET /estudiantes/practicas
+  def estudiantes_practicas
+    @estudiantes = Estudiante.all
+    estudiantes = []
+    for estudiante in @estudiantes
+      estudiantes.push(estudiante.as_json.merge('practicas':estudiante.practicas.as_json))
+    end
+    render json: estudiantes
+  end
+
+  # GET /estudiantes/saberPro
+  def estudiantes_saberpro
+    @estudiantes = Estudiante.all
+    estudiantes = []
+    for estudiante in @estudiantes
+      estudiantes.push(estudiante.as_json.merge('saberPro':estudiante.saberPro.as_json))
+    end
+    render json: estudiantes
+  end
+
+  # GET /estudiantes/citas
+  def estudiantes_citas
+    @estudiantes = Estudiante.all
+    estudiantes = []
+    for estudiante in @estudiantes
+      estudiantes.push(estudiante.as_json.merge('citas':estudiante.citas.as_json))
+    end
+    render json: estudiantes
+  end
+
   # GET /estudiantes/email?email={email}
   def find_by_email
     @estudiante = Estudiante.where(email: params[:email]).take
 
-    render json: @estudiante.as_json.merge('monitorias':@estudiante.monitorias.as_json).merge('practicas':@estudiante.practicas.as_json).merge('saberPro':@estudiante.saberPro.as_json)
+    render json: @estudiante.as_json.merge('monitorias':@estudiante.monitorias.as_json).merge('practicas':@estudiante.practicas.as_json).merge('saberPro':@estudiante.saberPro.as_json).merge('citas':@estudiante.citas.as_json)
   end
 
   # GET /estudiantes/1
   def show
-    render json: @estudiante.as_json.merge('monitorias':@estudiante.monitorias.as_json).merge('practicas':@estudiante.practicas.as_json).merge('saberPro':@estudiante.saberPro.as_json)
+    render json: @estudiante
   end
 
   # POST /estudiantes

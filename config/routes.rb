@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   resources :estudiantes do
     collection do
       get :email, to: 'estudiantes#find_by_email', email: /^[a-zA-Z.\s]+\d*@uniandes.edu.co$/
+      get :monitorias, to: 'estudiantes#estudiantes_monitorias'
+      get :practicas, to: 'estudiantes#estudiantes_practicas'
+      get :saberPro, to: 'estudiantes#estudiantes_saberpro'
+      get :citas, to: 'estudiantes#estudiantes_citas'
     end
   end
   resources :administradores do
@@ -24,9 +28,6 @@ Rails.application.routes.draw do
       post :cargar_archivo_estudiantes
       post :cargar_archivo_cursos
       post :cargar_archivo_profesores
-    end
-    member do
-
     end
   end
   resources :profesores do
