@@ -4,11 +4,7 @@ class EstudiantesController < ApplicationController
   # GET /estudiantes
   def index
     @estudiantes = Estudiante.all
-    estudiantes = []
-    for estudiante in @estudiantes
-      estudiantes.push(estudiante.as_json.merge('monitorias':estudiante.monitorias.as_json).merge('practicas':estudiante.practicas.as_json).merge('saberPro':estudiante.saberPro.as_json).merge('citas':estudiante.citas.as_json))
-    end
-    render json: estudiantes
+    render json: @estudiantes
   end
 
   # GET /estudiantes/monitorias
