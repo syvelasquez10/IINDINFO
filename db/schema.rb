@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170717205715) do
+ActiveRecord::Schema.define(version: 20170720134250) do
 
   create_table "administradores", force: :cascade do |t|
     t.string   "nombres"
@@ -118,6 +118,15 @@ ActiveRecord::Schema.define(version: 20170717205715) do
     t.boolean  "ha_sido_monitor"
     t.text     "comentarios_estudiante"
     t.index ["curso_id"], name: "index_monitorias_on_curso_id"
+  end
+
+  create_table "noticias", force: :cascade do |t|
+    t.string   "titulo"
+    t.text     "texto"
+    t.string   "semestre"
+    t.string   "fecha"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "practicas", force: :cascade do |t|
