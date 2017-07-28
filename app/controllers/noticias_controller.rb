@@ -46,6 +46,6 @@ class NoticiasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def noticia_params
-      params.require(:noticia).permit(:titulo, :texto, :semestre, :fecha)
+      params.require(:noticia).permit(:titulo, :texto, :semestre, :fecha, :imagen_url)
     end
 end
