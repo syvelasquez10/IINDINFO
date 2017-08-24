@@ -9,7 +9,7 @@ class MonitoriasValidator < ActiveModel::Validator
 end
 class Estudiante < ApplicationRecord
   has_many :monitorias
-  has_many :practicas
+  has_one :practica
   has_one :saberPro
   has_many :citas
 

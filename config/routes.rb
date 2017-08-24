@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :notificaciones
   resources :noticias
   resources :citas
   resources :horarios

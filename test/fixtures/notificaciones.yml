@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  asunto: MyString
+  contenido: MyText
+  filtro_categoria: MyString
+  filtro_estado: MyString
+
+two:
+  asunto: MyString
+  contenido: MyText
+  filtro_categoria: MyString
+  filtro_estado: MyString

@@ -17,6 +17,7 @@ class ApplicationController < ActionController::API
       # Se carga en un certificado la llave publica que indica el kid que viene en el header del jwt
       rsa = OpenSSL::X509::Certificate.new(llaves_publicas["#{header['kid']}"])
 
+      payload['aud']
       # Se revisa la firma con la llave publica generada
       JWT.decode params[:jwt], rsa.public_key, true, { :algorithm => 'RS256' }
     end
