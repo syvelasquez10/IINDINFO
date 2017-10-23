@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2017-10-23
+  usuario: MyString
+  action: MyString
+  controller: MyString
+  token: false
+
+two:
+  fecha: 2017-10-23
+  usuario: MyString
+  action: MyString
+  controller: MyString
+  token: false

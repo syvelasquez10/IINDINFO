@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :logs
   resources :notificaciones
   resources :noticias
   resources :citas
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
   resources :practicas
   resources :materia_fantasmas
   resources :cursos
+  resources :log
   resources :monitorias do
     collection do
       get :estado, to: 'monitorias#find_by_estado'

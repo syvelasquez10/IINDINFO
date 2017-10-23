@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170722204519) do
+ActiveRecord::Schema.define(version: 20171023154811) do
 
   create_table "administradores", force: :cascade do |t|
     t.string   "nombres"
@@ -90,6 +90,16 @@ ActiveRecord::Schema.define(version: 20170722204519) do
     t.string   "tipo_cita"
   end
 
+  create_table "logs", force: :cascade do |t|
+    t.date     "fecha"
+    t.string   "usuario"
+    t.string   "action"
+    t.string   "controller"
+    t.boolean  "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "materia_fantasmas", force: :cascade do |t|
     t.string   "codigo"
     t.datetime "created_at", null: false
@@ -128,6 +138,15 @@ ActiveRecord::Schema.define(version: 20170722204519) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "imagen_url"
+  end
+
+  create_table "notificaciones", force: :cascade do |t|
+    t.string   "asunto"
+    t.text     "contenido"
+    t.string   "filtro_categoria"
+    t.string   "filtro_estado"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "practicas", force: :cascade do |t|
