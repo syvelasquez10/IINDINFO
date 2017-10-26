@@ -32,7 +32,7 @@ class Monitoria < ApplicationRecord
     monitorias = estudiante.monitorias
     if monitorias.present? && monitorias.size > 1
       if monitorias[0]['id'] != monitoria['id']
-        monitorias[0].update(:estado => estado)
+        monitorias[0].update(:estado_segundo_curso => estado)
       else
         monitorias[1].update(:estado_segundo_curso => estado)
       end
