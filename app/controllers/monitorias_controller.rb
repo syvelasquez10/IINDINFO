@@ -38,19 +38,6 @@ class MonitoriasController < ApplicationController
         estudiante = Estudiante.find(params['estudiante_id'])
       end
 
-      # Esta revision buscar ver si el estudiante ya tiene otra monitoria aprobada
-      monitoria_estudiante = estudiante.monitorias[0]
-      if monitoria_estudiante.present?
-        monitoria_estudiante['segundo_curso'] = params['nombre_curso']
-        monitoria_estudiante['estado_segundo_curso'] = params['estado']
-        # monitoria_estudiante['doble_monitor'] = true
-        monitoria_estudiante.update(monitoria_estudiante.attributes)
-
-        # params['monitoria']['doble_monitor'] = true
-        params['monitoria']['segundo_curso'] = Curso.find(monitoria_estudiante['curso_id'])['nombre_curso']
-        params['monitoria']['estado_segundo_curso'] = monitoria_estudiante['estado']
-      end
-
       # Se revisa si el promedio del estudiante cumple para la monitoria
       # Dependiendo del promedio se le asigna un estado a la monitoria
       if estudiante['prom_acum'] < 3.5
@@ -58,6 +45,19 @@ class MonitoriasController < ApplicationController
         params['monitoria']['estado'] = Monitoria::ESTADOS[2]
       else
         params['monitoria']['estado'] = Monitoria::ESTADOS[1]
+      end
+
+      # Esta revision buscar ver si el estudiante ya tiene otra monitoria aprobada
+      segunda_monitoria = estudiante.monitorias[0]
+      if segunda_monitoria.present?
+        segunda_monitoria['segundo_curso'] = params['monitoria']['nombre_curso']
+        segunda_monitoria['estado_segundo_curso'] = params['monitoria']['estado']
+        # monitoria_estudiante['doble_monitor'] = true
+        segunda_monitoria.update(segunda_monitoria.attributes)
+
+        # params['monitoria']['doble_monitor'] = true
+        params['monitoria']['segundo_curso'] = Curso.find(segunda_monitoria['curso_id'])['nombre_curso']
+        params['monitoria']['estado_segundo_curso'] = segunda_monitoria['estado']
       end
 
       @monitoria = Monitoria.new(monitoria_params)
