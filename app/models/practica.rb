@@ -3,8 +3,11 @@ class Practica < ApplicationRecord
 
   # Lista de posibles estados que puede tomar la practica
   ESTADOS = ['Aplico',
-             'Aprobado',
-             'Rechazado'].freeze
+             'Autorizado',
+             'No autorizado',
+             'Puede ingresar a la plataforma del CTP',
+             'Realizó Práctica',
+             'No Realizó Práctica'].freeze
 
   validates :estado, inclusion: { in: ESTADOS,
                                   message: "%{value} no es un estado valido" }

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :monitorias do
     collection do
       get :estado, to: 'monitorias#find_by_estado'
+      post :aceptar, to: 'monitorias#aceptar_monitorias'
     end
   end
   resources :estudiantes do

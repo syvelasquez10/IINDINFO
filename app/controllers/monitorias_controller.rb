@@ -18,6 +18,13 @@ class MonitoriasController < ApplicationController
 
   # POST /monitorias
   def create
+
+    # Se revisa si se puede crear la monitoria
+    @monitoria = Monitoria.new(monitoria_params)
+
+    # Si hay errores al crearla se informa, de lo contrario se procede a crearla
+    if !@monitoria.errors.present?
+      @monitoria.destroy
       # Se revisa si se quiere crear una monitoria para un estudiante que no existe
       # Si el parametro estudiante_id no se encuentra en el body se asume que se quiere crear una monitoria para un estudiante que no existe
       if !params['estudiante_id'].present?
@@ -38,17 +45,20 @@ class MonitoriasController < ApplicationController
         estudiante = Estudiante.find(params['estudiante_id'])
       end
 
+      # Esta revision buscar ver si el estudiante ya tiene otra solicitud de monitoria
+      segunda_monitoria = estudiante.monitorias[0]
+
       # Se revisa si el promedio del estudiante cumple para la monitoria
       # Dependiendo del promedio se le asigna un estado a la monitoria
-      if estudiante['prom_acum'] < 3.5
+      # Se revisa si el número de créditos inscritos le permite tener una monitoria. Si ya tiene otra solicitud de monitoria entonces el número de créditos disponibles debe ser mayor
+      if estudiante['prom_acum'] >= Monitoria::PROMEDIO && ((segunda_monitoria.present? && estudiante['cred_sem_actual'] <= Monitoria::CREDITOS_DOS) || (!segunda_monitoria.present? && estudiante['cred_sem_actual'] <= Monitoria::CREDITOS_UNA))
         # Los estados son de la lista de estados que se encuentra en monitoria.rb
-        params['monitoria']['estado'] = Monitoria::ESTADOS[2]
-      else
         params['monitoria']['estado'] = Monitoria::ESTADOS[1]
+      else
+        params['monitoria']['estado'] = Monitoria::ESTADOS[2]
       end
 
-      # Esta revision buscar ver si el estudiante ya tiene otra monitoria aprobada
-      segunda_monitoria = estudiante.monitorias[0]
+      # Si tiene otra monitoria se actualiza para esa el valor de estado segunda monitoria
       if segunda_monitoria.present?
         segunda_monitoria['segundo_curso'] = params['monitoria']['nombre_curso']
         segunda_monitoria['estado_segundo_curso'] = params['monitoria']['estado']
@@ -66,12 +76,15 @@ class MonitoriasController < ApplicationController
       else
         render json: @monitoria.errors, status: :unprocessable_entity
       end
+    else
+      render json: @monitoria.errors, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /monitorias/1
   def update
     estado = -1
-    # Si el estado al que se cambia la monitoria es a seleccionado por el profesor
+    # Si la monitoria se cambia a estado Aprobado por Promedio
     if params['estado'] == Monitoria::ESTADOS[1]
       @monitoria['doble_monitor'] != ''
       @monitoria['nombre_profesor'] = ''
@@ -79,14 +92,10 @@ class MonitoriasController < ApplicationController
     elsif params['estado'] == Monitoria::ESTADOS[2]
       estado = 2
     elsif params['estado'] == Monitoria::ESTADOS[3]
-      @monitoria['doble_monitor'] = ''
-      @monitoria['nombre_profesor'] = ''
       estado = 3
     elsif params['estado'] == Monitoria::ESTADOS[4]
-      @monitoria['doble_monitor'] = true
       estado = 4
     elsif params['estado'] == Monitoria::ESTADOS[5]
-      @monitoria['doble_monitor'] != ''
       estado = 5
     elsif params['estado'] == Monitoria::ESTADOS[6]
       estado = 6
@@ -94,6 +103,12 @@ class MonitoriasController < ApplicationController
       estado = 7
     elsif params['estado'] == Monitoria::ESTADOS[8]
       estado = 8
+    elsif params['estado'] == Monitoria::ESTADOS[9]
+      estado = 9
+    elsif params['estado'] == Monitoria::ESTADOS[10]
+      estado = 10
+    elsif params['estado'] == Monitoria::ESTADOS[11]
+      estado = 11
     end
 
     if estado != -1
@@ -120,6 +135,40 @@ class MonitoriasController < ApplicationController
     render json: monitorias
   end
 
+  # POST /monitorias/aceptar
+  def aceptar_monitorias
+    mensaje = 'Modificación de estado de monitorias no valida, debido a falta de parametros necesarios para hacerla'
+    if params['estado_uno'].present? && params['estado_dos'].present? && params['estado_uno'] == Monitoria::ESTADOS[4] && params['estado_dos'] == Monitoria::ESTADOS[4]
+      mensaje = 'No se pueden aceptar 2 monitorias dobles'
+    elsif params['estado_uno'].present? && params['estado_dos'].present? && ((params['estado_uno'] == Monitoria::ESTADOS[4] && params['estado_dos'] == Monitoria::ESTADOS[3]) || (params['estado_uno'] == Monitoria::ESTADOS[3] && params['estado_dos'] == Monitoria::ESTADOS[4]))
+      mensaje = 'No se pueden aceptar una monitoria doble y una sencilla'
+    elsif params['estado_uno'].present? && params['estudiante_id'].present? && params['monitoria_uno_id'].present?
+      estudiante = Estudiante.find(params['estudiante_id'])
+
+      monitorias = estudiante.monitorias
+
+      # Se revisa si el estudiante tiene monitorias
+      if monitorias.present? && monitorias.size > 1
+        # Si tiene solo 1 monitoria se cambia el estado, pero si tiene 2 se debe hacer más procesos
+        if monitorias.size > 2 && params['monitoria_dos_id'].present? && (monitorias[0]['id'] == params['monitoria_uno_id'] && monitorias[1]['id'] == params['monitoria_dos_id'])
+          monitorias[0]['estado'] = params['estado_uno']
+          monitorias[0].update(monitorias[0].attributes)
+          monitorias[1]['estado'] = params['estado_uno']
+          monitorias[1].update(monitorias[1].attributes)
+          mensaje = 'Cambio exitoso en el estado de las monitorias'
+        elsif monitorias[0]['id'] == params['monitoria_uno_id']
+          monitorias[0]['estado'] = params['estado_uno']
+          monitorias[0].update(monitorias[0].attributes)
+          mensaje = 'Cambio exitoso en el estado de la monitoria'
+        else
+          mensaje = 'Alguno de los parametros enviados no corresponde. Vuelva a intentarlo'
+        end
+      end
+    end
+
+    render json: {mensaje:mensaje}
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_monitoria
@@ -128,11 +177,11 @@ class MonitoriasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def monitoria_params
-      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :comentarios, :semestre, :doble_monitor, :nombre_profesor, :segundo_curso, :monitoria_otro_departamento, :nota_monitoria, :entrego_documentos, :firmo_convenio, :estado, :estado_segundo_curso)
+      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :comentarios, :semestre, :doble_monitor, :nombre_profesor, :segundo_curso, :monitoria_otro_departamento, :nota_monitoria, :entrego_documentos, :firmo_convenio, :estado_segundo_curso)
     end
 
     # Only allow a trusted parameter "white list" through.
     def estudiante_params
-      params.require(:estudiante).permit(:carnet, :nombres, :programa, :celular, :prom_acum, :email, :cred_sem_actual)
+      params.require(:estudiante).permit(:carnet, :apellidos, :nombres, :programa, :doble_programa, :doc_identidad, :fecha_nac, :sexo, :ciudad, :celular, :sit_academica, :cred_tomados, :cred_aprobados, :cred_pga, :prom_acum, :cred_transf, :ssc, :email, :cred_sem_actual)
     end
 end
