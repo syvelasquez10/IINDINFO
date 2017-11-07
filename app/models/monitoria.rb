@@ -14,6 +14,11 @@ class Monitoria < ApplicationRecord
   belongs_to :estudiante
   belongs_to :curso
 
+  validates :estado, presence: true
+  validates :nota_curso, presence: true
+  validates :semestre_curso, presence: true
+  validates :ha_sido_monitor, presence: true
+
   # Lista de posibles estados que puede tomar la monitoria
   ESTADOS = ['Aplico',
              'Aprobado por Promedio',
@@ -24,7 +29,6 @@ class Monitoria < ApplicationRecord
              'Aceptado por el Estudiante Doble',
              'Aceptado por el Estudiante Sencillo',
              'Rechazado por el Estudiante',
-             'Monitoria Aprobada',
              'Entrego Documentos',
              'Firmo Convenio'].freeze
 
@@ -39,11 +43,19 @@ class Monitoria < ApplicationRecord
   # Promedio necesario para la monitoria
   PROMEDIO = 3.5
 
+  PROMEDIO_EXTRACREDITAR = 4
+
   # Créditos para una monitoria
-  CREDITOS_UNA = 20
+  CREDITOS_UNA_PROMEDIO_EXTRACREDITAR = 23
 
   # Créditos para dos monitorias
-  CREDITOS_DOS = 18
+  CREDITOS_DOS_PROMEDIO_EXTRACREDITAR = 21
+
+  # Créditos para una monitoria
+  CREDITOS_UNA_PROMEDIO_EXTRACREDITAR = 18
+
+  # Créditos para dos monitorias
+  CREDITOS_DOS_PROMEDIO_EXTRACREDITAR = 16
 
   validates :estado, inclusion: { in: ESTADOS,
                                 message: "%{value} no es un estado valido" }
