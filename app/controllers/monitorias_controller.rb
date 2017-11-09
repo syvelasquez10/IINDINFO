@@ -22,7 +22,6 @@ class MonitoriasController < ApplicationController
     # Se revisa si se puede crear la monitoria
     @monitoria = Monitoria.new(monitoria_params)
 
-
     # Si hay errores al crearla se informa, de lo contrario se procede a crearla
     if !@monitoria.errors.present?
       @monitoria.destroy
