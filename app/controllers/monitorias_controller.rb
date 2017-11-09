@@ -54,6 +54,8 @@ class MonitoriasController < ApplicationController
       if estudiante['prom_acum'] >= Monitoria::PROMEDIO && ((segunda_monitoria.present? && estudiante['cred_sem_actual'] <= Monitoria::CREDITOS_DOS) || (!segunda_monitoria.present? && estudiante['cred_sem_actual'] <= Monitoria::CREDITOS_UNA))
         # Los estados son de la lista de estados que se encuentra en monitoria.rb
         params['monitoria']['estado'] = Monitoria::ESTADOS[1]
+      elsif estudiante['prom_acum'] >= Monitoria::PROMEDIO_EXTRACREDITAR && ((segunda_monitoria.present? && estudiante['cred_sem_actual'] <= Monitoria::CREDITOS_DOS_EXTRACREDITAR) || (!segunda_monitoria.present? && estudiante['cred_sem_actual'] <= Monitoria::CREDITOS_UNA_EXTRACREDITAR))
+        params['monitoria']['estado'] = Monitoria::ESTADOS[1]
       else
         params['monitoria']['estado'] = Monitoria::ESTADOS[2]
       end

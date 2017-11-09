@@ -46,16 +46,16 @@ class Monitoria < ApplicationRecord
   PROMEDIO_EXTRACREDITAR = 4
 
   # Créditos para una monitoria
-  CREDITOS_UNA_PROMEDIO_EXTRACREDITAR = 23
+  CREDITOS_UNA = 23
 
   # Créditos para dos monitorias
-  CREDITOS_DOS_PROMEDIO_EXTRACREDITAR = 21
+  CREDITOS_DOS = 21
 
   # Créditos para una monitoria
-  CREDITOS_UNA_PROMEDIO_EXTRACREDITAR = 18
+  CREDITOS_UNA_EXTRACREDITAR = 18
 
   # Créditos para dos monitorias
-  CREDITOS_DOS_PROMEDIO_EXTRACREDITAR = 16
+  CREDITOS_DOS_EXTRACREDITAR = 16
 
   validates :estado, inclusion: { in: ESTADOS,
                                 message: "%{value} no es un estado valido" }
