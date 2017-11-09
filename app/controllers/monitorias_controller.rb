@@ -18,9 +18,10 @@ class MonitoriasController < ApplicationController
 
   # POST /monitorias
   def create
-
+  puts (monitoria_params['ha_sido_monitor'])
     # Se revisa si se puede crear la monitoria
     @monitoria = Monitoria.new(monitoria_params)
+
 
     # Si hay errores al crearla se informa, de lo contrario se procede a crearla
     if !@monitoria.errors.present?
@@ -179,7 +180,7 @@ class MonitoriasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def monitoria_params
-      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :comentarios, :semestre, :doble_monitor, :nombre_profesor, :segundo_curso, :monitoria_otro_departamento, :nota_monitoria, :entrego_documentos, :firmo_convenio, :estado_segundo_curso, :ha_sido_monitor,:comentarios_estudiante)
+      params.require(:monitoria).permit(:ha_sido_monitor, :estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :comentarios, :semestre, :doble_monitor, :nombre_profesor, :segundo_curso, :monitoria_otro_departamento, :nota_monitoria, :entrego_documentos, :firmo_convenio, :estado_segundo_curso, :comentarios_estudiante)
     end
 
     # Only allow a trusted parameter "white list" through.
