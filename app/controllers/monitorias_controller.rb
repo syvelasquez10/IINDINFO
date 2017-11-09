@@ -179,7 +179,7 @@ class MonitoriasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def monitoria_params
-      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :comentarios, :semestre, :doble_monitor, :nombre_profesor, :segundo_curso, :monitoria_otro_departamento, :nota_monitoria, :entrego_documentos, :firmo_convenio, :estado_segundo_curso)
+      params.require(:monitoria).permit(:estado, :notificaciones, :nota_curso, :estudiante_id, :curso_id, :semestre_curso, :comentarios, :semestre, :doble_monitor, :nombre_profesor, :segundo_curso, :monitoria_otro_departamento, :nota_monitoria, :entrego_documentos, :firmo_convenio, :estado_segundo_curso, :ha_sido_monitor,:comentarios_estudiante)
     end
 
     # Only allow a trusted parameter "white list" through.
