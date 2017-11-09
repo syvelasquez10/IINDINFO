@@ -17,7 +17,7 @@ class Monitoria < ApplicationRecord
   validates :estado, presence: true
   validates :nota_curso, presence: true
   validates :semestre_curso, presence: true
-  validates :ha_sido_monitor, presence: true
+  validates_inclusion_of :ha_sido_monitor, :in => [true, false]
 
   # Lista de posibles estados que puede tomar la monitoria
   ESTADOS = ['Aplico',
