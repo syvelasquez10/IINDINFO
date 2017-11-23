@@ -26,8 +26,8 @@ class Monitoria < ApplicationRecord
              'Seleccionado por el Profesor Monitor Sencillo',
              'Seleccionado por el Profesor Monitor Doble',
              'No Seleccionado por el Profesor',
-             'Aceptado por el Estudiante Doble',
              'Aceptado por el Estudiante Sencillo',
+             'Aceptado por el Estudiante Doble',
              'Rechazado por el Estudiante',
              'Entrego Documentos',
              'Firmo Convenio'].freeze

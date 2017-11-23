@@ -140,9 +140,9 @@ class MonitoriasController < ApplicationController
   # POST /monitorias/aceptar
   def aceptar_monitorias
     mensaje = 'Modificación de estado de monitorias no valida, debido a falta de parametros necesarios para hacerla'
-    if params['estado_uno'].present? && params['estado_dos'].present? && params['estado_uno'] == Monitoria::ESTADOS[4] && params['estado_dos'] == Monitoria::ESTADOS[4]
+    if params['estado_uno'].present? && params['estado_dos'].present? && params['estado_uno'] == Monitoria::ESTADOS[7] && params['estado_dos'] == Monitoria::ESTADOS[7]
       mensaje = 'No se pueden aceptar 2 monitorias dobles'
-    elsif params['estado_uno'].present? && params['estado_dos'].present? && ((params['estado_uno'] == Monitoria::ESTADOS[4] && params['estado_dos'] == Monitoria::ESTADOS[3]) || (params['estado_uno'] == Monitoria::ESTADOS[3] && params['estado_dos'] == Monitoria::ESTADOS[4]))
+    elsif params['estado_uno'].present? && params['estado_dos'].present? && ((params['estado_uno'] == Monitoria::ESTADOS[7] && params['estado_dos'] == Monitoria::ESTADOS[6]) || (params['estado_uno'] == Monitoria::ESTADOS[6] && params['estado_dos'] == Monitoria::ESTADOS[7]))
       mensaje = 'No se pueden aceptar una monitoria doble y una sencilla'
     elsif params['estado_uno'].present? && params['estudiante_id'].present? && params['monitoria_uno_id'].present?
       estudiante = Estudiante.find(params['estudiante_id'])
@@ -152,13 +152,23 @@ class MonitoriasController < ApplicationController
       # Se revisa si el estudiante tiene monitorias
       if monitorias.present? && monitorias.size > 1
         # Si tiene solo 1 monitoria se cambia el estado, pero si tiene 2 se debe hacer más procesos
-        if monitorias.size > 2 && params['monitoria_dos_id'].present? && (monitorias[0]['id'] == params['monitoria_uno_id'] && monitorias[1]['id'] == params['monitoria_dos_id'])
-          monitorias[0]['estado'] = params['estado_uno']
-          monitorias[0].update(monitorias[0].attributes)
-          monitorias[1]['estado'] = params['estado_uno']
-          monitorias[1].update(monitorias[1].attributes)
-          mensaje = 'Cambio exitoso en el estado de las monitorias'
-        elsif monitorias[0]['id'] == params['monitoria_uno_id']
+        if monitorias.size > 2 && params['monitoria_dos_id'].present? && params['estado_dos'].present? && (params['estado_uno']==Monitoria::ESTADOS[6]||params['estado_uno']==Monitoria::ESTADOS[7]||params['estado_uno']==Monitoria::ESTADOS[8]) && (params['estado_dos']==Monitoria::ESTADOS[6]||params['estado_dos']==Monitoria::ESTADOS[7]||params['estado_uno']==Monitoria::ESTADOS[8])
+          if monitorias[0]['id'] == params['monitoria_uno_id'] && monitorias[1]['id'] == params['monitoria_dos_id']
+            monitorias[0]['estado'] = params['estado_uno']
+            monitorias[0].update(monitorias[0].attributes)
+            monitorias[1]['estado'] = params['estado_dos']
+            monitorias[1].update(monitorias[1].attributes)
+            mensaje = 'Cambio exitoso en el estado de las monitorias'
+          elsif monitorias[1]['id'] == params['monitoria_uno_id'] && monitorias[0]['id'] == params['monitoria_dos_id']
+            monitorias[1]['estado'] = params['estado_uno']
+            monitorias[1].update(monitorias[1].attributes)
+            monitorias[0]['estado'] = params['estado_dos']
+            monitorias[0].update(monitorias[0].attributes)
+            mensaje = 'Cambio exitoso en el estado de las monitorias'
+          else
+            mensaje = 'El identificador de las monitorias no es el indicado. Contacte al administrador para resolver el problema.'
+          end
+        elsif monitorias[0]['id'] == params['monitoria_uno_id'] && (params['estado_uno']==Monitoria::ESTADOS[6]||params['estado_uno']==Monitoria::ESTADOS[7]||params['estado_uno']==Monitoria::ESTADOS[8])
           monitorias[0]['estado'] = params['estado_uno']
           monitorias[0].update(monitorias[0].attributes)
           mensaje = 'Cambio exitoso en el estado de la monitoria'

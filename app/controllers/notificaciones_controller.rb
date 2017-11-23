@@ -16,7 +16,7 @@ class NotificacionesController < ApplicationController
   # POST /notificaciones
   def create
     @notificacion = Notificacion.new(notificacion_params)
-
+    Notificacion.enviar_mensaje(params)
     if @notificacion.save
       render json: @notificacion, status: :created, location: @notificacion
     else
