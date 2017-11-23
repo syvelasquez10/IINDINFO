@@ -155,14 +155,18 @@ class MonitoriasController < ApplicationController
         if monitorias.size >= 2 && params['monitoria_dos_id'].present? && params['estado_dos'].present? && (params['estado_uno']==Monitoria::ESTADOS[6]||params['estado_uno']==Monitoria::ESTADOS[7]||params['estado_uno']==Monitoria::ESTADOS[8]) && (params['estado_dos']==Monitoria::ESTADOS[6]||params['estado_dos']==Monitoria::ESTADOS[7]||params['estado_dos']==Monitoria::ESTADOS[8])
           if monitorias[0]['id'] == params['monitoria_uno_id'] && monitorias[1]['id'] == params['monitoria_dos_id']
             monitorias[0]['estado'] = params['estado_uno']
+            monitorias[0]['estado_segundo_curso'] = params['estado_dos']
             monitorias[0].update(monitorias[0].attributes)
             monitorias[1]['estado'] = params['estado_dos']
+            monitorias[1]['estado_segundo_curso'] = params['estado_uno']
             monitorias[1].update(monitorias[1].attributes)
             mensaje = 'Cambio exitoso en el estado de las monitorias'
           elsif monitorias[1]['id'] == params['monitoria_uno_id'] && monitorias[0]['id'] == params['monitoria_dos_id']
             monitorias[1]['estado'] = params['estado_uno']
+            monitorias[1]['estado_segundo_curso'] = params['estado_dos']
             monitorias[1].update(monitorias[1].attributes)
             monitorias[0]['estado'] = params['estado_dos']
+            monitorias[0]['estado_segundo_curso'] = params['estado_uno']
             monitorias[0].update(monitorias[0].attributes)
             mensaje = 'Cambio exitoso en el estado de las monitorias'
           else
