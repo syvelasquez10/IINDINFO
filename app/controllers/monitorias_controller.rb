@@ -153,7 +153,7 @@ class MonitoriasController < ApplicationController
       if monitorias.present? && monitorias.size > 1
         # Si tiene solo 1 monitoria se cambia el estado, pero si tiene 2 se debe hacer más procesos
         puts(params)
-        if monitorias.size > 2 && params['monitoria_dos_id'].present? && params['estado_dos'].present? && (params['estado_uno']==Monitoria::ESTADOS[6]||params['estado_uno']==Monitoria::ESTADOS[7]||params['estado_uno']==Monitoria::ESTADOS[8]) && (params['estado_dos']==Monitoria::ESTADOS[6]||params['estado_dos']==Monitoria::ESTADOS[7]||params['estado_dos']==Monitoria::ESTADOS[8])
+        if monitorias.size > 2 && params['monitoria_dos_id'].present? && params['estado_dos'].present? 
           if monitorias[0]['id'] == params['monitoria_uno_id'] && monitorias[1]['id'] == params['monitoria_dos_id']
             monitorias[0]['estado'] = params['estado_uno']
             monitorias[0].update(monitorias[0].attributes)
