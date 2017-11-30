@@ -1,4 +1,4 @@
-class CreateNoticias < ActiveRecord::Migration[5.0]
+class CreateCitas < ActiveRecord::Migration[5.0]
   def change
     create_table :citas do |t|
       t.string :tipo_cita
