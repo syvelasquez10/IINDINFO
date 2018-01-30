@@ -4,6 +4,10 @@ class ApplicationController < ActionController::API
 
   before_action :log
 
+  def login
+
+  end
+
   private
     # Metodo para revisar el token de autenticacion de firebase
     def revisar_token

@@ -152,7 +152,7 @@ class MonitoriasController < ApplicationController
       # Se revisa si el estudiante tiene monitorias
       if monitorias.present? && monitorias.size > 0
         # Si tiene solo 1 monitoria se cambia el estado, pero si tiene 2 se debe hacer más procesos
-        if monitorias.size > 1 && params['monitoria_dos_id'].present? && params['estado_dos'].present? && (params['estado_uno']==Monitoria::ESTADOS[6]||params['estado_uno']==Monitoria::ESTADOS[7]||params['estado_uno']==Monitoria::ESTADOS[8]) && (params['estado_dos']==Monitoria::ESTADOS[6]||params['estado_dos']==Monitoria::ESTADOS[7]||params['estado_dos']==Monitoria::ESTADOS[8])
+        if params['monitoria_dos_id'].present? && params['estado_dos'].present? && (params['estado_uno']==Monitoria::ESTADOS[6]||params['estado_uno']==Monitoria::ESTADOS[7]||params['estado_uno']==Monitoria::ESTADOS[8]) && (params['estado_dos']==Monitoria::ESTADOS[6]||params['estado_dos']==Monitoria::ESTADOS[7]||params['estado_dos']==Monitoria::ESTADOS[8])
           if monitorias[0]['id'] == params['monitoria_uno_id'] && monitorias[1]['id'] == params['monitoria_dos_id']
             monitorias[0]['estado'] = params['estado_uno']
             monitorias[0]['estado_segundo_curso'] = params['estado_dos']
@@ -175,6 +175,10 @@ class MonitoriasController < ApplicationController
         elsif monitorias[0]['id'] == params['monitoria_uno_id'] && (params['estado_uno']==Monitoria::ESTADOS[6]||params['estado_uno']==Monitoria::ESTADOS[7]||params['estado_uno']==Monitoria::ESTADOS[8])
           monitorias[0]['estado'] = params['estado_uno']
           monitorias[0].update(monitorias[0].attributes)
+          if monitorias.size>1
+            monitorias[1]['estado_segundo_curso'] = params['estado_uno']
+            monitorias[1].update(monitorias[1].attributes)
+          end
           mensaje = 'Cambio exitoso en el estado de la monitoria'
         else
           mensaje = 'Alguno de los parametros enviados no corresponde. Vuelva a intentarlo'

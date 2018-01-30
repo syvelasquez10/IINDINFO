@@ -1,4 +1,5 @@
 class EstudiantesController < ApplicationController
+  acts_as_token_authentication_handler_for Administrador
   before_action :set_estudiante, only: [:show, :update, :destroy]
 
   # GET /estudiantes
